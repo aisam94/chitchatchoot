@@ -13,6 +13,18 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
+const main_navigation = [
+  { name: "Home", href: "#" },
+  { name: "Groups", href: "#" },
+  { name: "Message", href: "#" },
+];
+
+const profile_navigation = [
+  { name: "Profile", href: "#" },
+  { name: "Settings", href: "#" },
+  { name: "Log Out", href: "#" },
+];
+
 const Navbar = () => {
   return (
     <Disclosure as="nav" className="bg-gray-200">
@@ -21,7 +33,7 @@ const Navbar = () => {
           <div className="">
             <div className="relative flex items-center justify-between">
               {/*Menu toggle open items*/}
-              <Disclosure.Button className="inline-flex items-center justify-center ml-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 sm:hidden">
+              <Disclosure.Button className="inline-flex items-center justify-center ml-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-500 sm:hidden">
                 {open ? (
                   <XIcon className="block h-6 w-6" aria-hidden="true" />
                 ) : (
@@ -32,10 +44,15 @@ const Navbar = () => {
               <ChatIcon className="w-9 h-9 m-3" />
               {/*Item text*/}
               <div className="space-x-5 hidden sm:flex">
-                <div>Dashboard</div>
-                <div>Team</div>
-                <div>Projects</div>
-                <div>Message</div>
+                {main_navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="p-2 rounded-md hover:text-white hover:bg-gray-500"
+                  >
+                    {item.name}
+                  </a>
+                ))}
               </div>
               <div className="relative ml-auto mr-2 text-gray-600 hidden sm:block">
                 {/*Search bar*/}
@@ -76,45 +93,21 @@ const Navbar = () => {
                     {/*Profile circle items*/}
                     <Menu.Items className="origin-top-right absolute right-2 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="flex flex-col m-2 ">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Profile
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Log Out
-                            </a>
-                          )}
-                        </Menu.Item>
+                        {profile_navigation.map((item) => (
+                          <Menu.Item key={item.name}>
+                            {({ active }) => (
+                              <a
+                                href={item.href}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
+                              >
+                                {item.name}
+                              </a>
+                            )}
+                          </Menu.Item>
+                        ))}
                       </div>
                     </Menu.Items>
                   </Transition>
@@ -125,11 +118,33 @@ const Navbar = () => {
           {/*Disclosure panel popup*/}
           <Disclosure.Panel className="sm:hidden">
             {/*item text*/}
-            <div className="flex flex-col ml-4 space-y-2">
-              <div>Dashboard</div>
-              <div>Team</div>
-              <div>Projects</div>
-              <div>Message</div>
+            <div className="flex flex-col mx-4 space-y-2">
+              {main_navigation.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="p-2 rounded-md hover:text-white hover:bg-gray-500"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </div>
+            <div className="inline-block relative text-gray-600 ml-4 mt-2">
+              {/*Search bar*/}
+              <input
+                className="border-2 border-gray-300 bg-white h-10 px-2 rounded-lg text-sm focus:outline-none mb-3"
+                type="search"
+                name="search"
+                placeholder="Search ..."
+              />
+              {/*Search icon*/}
+              {/*need to fix search icon css styling*/}
+              <button
+                type="submit"
+                className="relative right-7 top-1 mt-3 mr-3"
+              >
+                <SearchIcon className="w-4 h-4" />
+              </button>{" "}
             </div>
           </Disclosure.Panel>
         </>
