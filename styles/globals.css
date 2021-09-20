@@ -2,3 +2,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .toggle-checkbox:checked {
+    @apply right-0 border-blue-400;
+  }
+
+  .toggle-checkbox:checked + .toggle-label {
+    @apply bg-blue-400;
+    /* border-color: #68d391; */
+  }
+  .settings-text-width {
+    @apply w-64;
+  }
+}
