@@ -23,11 +23,11 @@ const Settings: NextPage = () => {
           </div>
           <div className="space-y-2">
             {/*enable dark theme*/}
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 hover:bg-gray-200">
               <MoonIcon className="h-6 w-6" />
               <label
                 htmlFor="dark-toggle"
-                className="select-none settings-text-width"
+                className="select-none settings-text-width cursor-pointer"
               >
                 Dark Theme
               </label>
@@ -45,11 +45,11 @@ const Settings: NextPage = () => {
               </div>
             </div>
             {/*show online status*/}
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 hover:bg-gray-200">
               <CheckCircleIcon className="h-6 w-6" />
               <label
                 htmlFor="online-status-toggle"
-                className="select-none settings-text-width"
+                className="select-none settings-text-width cursor-pointer"
               >
                 Show online status
               </label>
@@ -67,11 +67,11 @@ const Settings: NextPage = () => {
               </div>
             </div>
             {/*enable sound notification*/}
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 hover:bg-gray-200">
               <VolumeUpIcon className="h-6 w-6" />
               <label
                 htmlFor="sound-bell-toggle"
-                className="select-none settings-text-width"
+                className="select-none settings-text-width cursor-pointer"
               >
                 Enable sound bell notification
               </label>
@@ -89,24 +89,24 @@ const Settings: NextPage = () => {
               </div>
             </div>
             {/*change text font*/}
-            <div className="flex space-x-2 ">
+            <div className="flex space-x-2 hover:bg-gray-200">
               <DocumentTextIcon className="h-6 w-6" />
-              <label className="select-none settings-text-width">
+              <label className="select-none settings-text-width cursor-pointer">
                 Change text font
               </label>
               <ChevronRightIcon className="h-6 w-6" />
             </div>
             {/*delete account*/}
-            <div className="flex space-x-2 ">
+            <div className="flex space-x-2 hover:bg-gray-200">
               <TrashIcon className="h-6 w-6" />
-              <label className="select-none settings-text-width">
+              <label className="select-none settings-text-width cursor-pointer">
                 Delete account
               </label>
             </div>
             {/*log out*/}
-            <div className="flex space-x-2 ">
+            <div className="flex space-x-2 hover:bg-gray-200">
               <LogoutIcon className="h-6 w-6 transform rotate-180" />
-              <label className="select-none settings-text-width">
+              <label className="select-none settings-text-width cursor-pointer">
                 Log out of account
               </label>
             </div>
