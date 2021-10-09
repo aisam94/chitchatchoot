@@ -9,6 +9,8 @@ import {
 import { ChatIcon } from "@heroicons/react/solid";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 
+import { getAuth, signOut } from "firebase/auth";
+
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
@@ -22,10 +24,12 @@ const main_navigation = [
 const profile_navigation = [
   { name: "Profile", href: "#" },
   { name: "Settings", href: "#" },
-  { name: "Log Out", href: "#" },
+  { name: "Theme", href: "#" },
 ];
 
 const Navbar = () => {
+  const auth = getAuth();
+
   return (
     <Disclosure as="nav" className="bg-gray-200">
       {({ open }) => (
@@ -108,6 +112,20 @@ const Navbar = () => {
                             )}
                           </Menu.Item>
                         ))}
+                        <Menu.Item key="logout">
+                          {({ active }) => (
+                            <a
+                              onClick={() => signOut(auth)}
+                              href="#"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Log Out
+                            </a>
+                          )}
+                        </Menu.Item>
                       </div>
                     </Menu.Items>
                   </Transition>

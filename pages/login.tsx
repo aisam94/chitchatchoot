@@ -1,10 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-
 import Navbar from "../components/Navbar";
+import { auth, provider } from "../firebase";
+import { signInWithPopup } from "@firebase/auth";
 
 const Login: NextPage = () => {
+  const signIn = () => {
+    signInWithPopup(auth, provider).catch(alert);
+  };
+
   return (
     <div className="">
       <Head>
@@ -68,6 +73,14 @@ const Login: NextPage = () => {
               Do not have an account? Register here.
             </a>
           </Link>
+          {/*Sign in with Google*/}
+          <div onClick={signIn}>
+            <Link href="/">
+              <a className="text-blue-400 hover:text-blue-600">
+                Sign in with Google
+              </a>
+            </Link>
+          </div>
         </div>
       </main>
       <footer></footer>

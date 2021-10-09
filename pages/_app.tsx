@@ -1,7 +1,40 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { useEffect } from "react";
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+
+import Loading from "../components/Loading";
+import Login from "./login";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../firebase";
+import { doc, setDoc, serverTimestamp } from "@firebase/firestore";
+// import firebase from "firebase/compat/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  //get user status from firebase modules
+  const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user) {
+      //references users db using users uid
+      const docRef = doc(db, "users", user.uid);
+      //create or overwrite data from user
+      setDoc(
+        docRef,
+        {
+          email: user.email,
+          lastSeen: serverTimestamp(),
+          photoURL: user.photoURL,
+        },
+        { merge: true }
+      );
+    }
+  }, [user]);
+
+  if (loading) return <Loading />;
+
+  if (!user) return <Login />;
+
+  return <Component {...pageProps} />;
 }
-export default MyApp
+export default MyApp;

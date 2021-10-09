@@ -1,20 +1,22 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
+// import Image from "next/image";
 
 import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <div className="h-full overflow-hidden">
       <Head>
         <title>ChitChatChoot</title>
         <meta name="description" content="Chitty chitty bang bang" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
+      <main className="h-full">
         <Navbar />
+        <Sidebar />
       </main>
 
       {/*
