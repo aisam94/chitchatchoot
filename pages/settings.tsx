@@ -10,13 +10,10 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/outline";
 
-import Navbar from "../components/Navbar";
-
 const Settings: NextPage = () => {
   return (
     <div>
       <main>
-        <Navbar />
         <div className="flex flex-col items-center space-y-5 mt-4">
           <div className="">
             <h1 className="font-bold text-xl">Settings</h1>

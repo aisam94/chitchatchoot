@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 
 import Loading from "../components/Loading";
 import Login from "./login";
+import Navbar from "../components/Navbar";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
@@ -33,8 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   if (loading) return <Loading />;
 
-  if (!user) return <Login />;
-
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Navbar />
+      {user ? <Component {...pageProps} /> : <Login />}
+    </>
+  );
 }
 export default MyApp;

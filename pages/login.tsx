@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Navbar from "../components/Navbar";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "@firebase/auth";
 
@@ -18,7 +17,6 @@ const Login: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Navbar />
         <div className="flex flex-col items-center space-y-5 mt-4">
           <h1 className="font-bold text-xl">Sign in to your account</h1>
           <form className="flex flex-col space-y-4">

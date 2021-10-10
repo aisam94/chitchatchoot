@@ -2,8 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-import Navbar from "../components/Navbar";
-
 const Register: NextPage = () => {
   return (
     <div>
@@ -13,7 +11,6 @@ const Register: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Navbar />
         <div className="flex flex-col items-center space-y-5 mt-4">
           <h1 className="font-bold text-xl">Register your account</h1>
           <form className="flex flex-col space-y-4">
