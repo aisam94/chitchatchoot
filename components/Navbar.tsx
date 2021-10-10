@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/outline";
 import { ChatIcon } from "@heroicons/react/solid";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
+import Link from "next/link";
 
 import { getAuth, signOut } from "firebase/auth";
 
@@ -15,21 +16,38 @@ function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
+function MyLink(props: any) {
+  let { href, children, ...rest } = props;
+
+  return (
+    <Link href={href}>
+      <a {...rest}>{children}</a>
+    </Link>
+  );
+}
+
 const main_navigation = [
-  { name: "Home", href: "#" },
+  { name: "Home", href: "/" },
   { name: "Groups", href: "#" },
   { name: "Message", href: "#" },
 ];
 
 const profile_navigation = [
-  { name: "Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Theme", href: "#" },
+  { name: "Profile", href: "/profile" },
+  {
+    name: "Settings",
+    href: "/settings",
+  },
+  {
+    name: "Log out",
+    href: "",
+    onclick() {
+      signOut(getAuth());
+    },
+  },
 ];
 
 const Navbar = () => {
-  const auth = getAuth();
-
   return (
     <Disclosure as="nav" className="bg-gray-200">
       {({ open }) => (
@@ -37,31 +55,31 @@ const Navbar = () => {
           <div className="">
             <div className="relative flex items-center justify-between">
               {/*Menu toggle open items*/}
-              <Disclosure.Button className="inline-flex items-center justify-center ml-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-500 sm:hidden">
+              <Disclosure.Button className="inline-flex items-center justify-center p-2 ml-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-500 sm:hidden">
                 {open ? (
-                  <XIcon className="block h-6 w-6" aria-hidden="true" />
+                  <XIcon className="block w-6 h-6" aria-hidden="true" />
                 ) : (
-                  <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                  <MenuIcon className="block w-6 h-6" aria-hidden="true" />
                 )}
               </Disclosure.Button>
               {/*Website logo */}
-              <ChatIcon className="w-9 h-9 m-3" />
+              <ChatIcon className="m-3 w-9 h-9" />
               {/*Item text*/}
-              <div className="space-x-5 hidden sm:flex">
+              <div className="hidden space-x-5 sm:flex">
                 {main_navigation.map((item) => (
-                  <a
+                  <MyLink
                     key={item.name}
                     href={item.href}
                     className="p-2 rounded-md hover:text-white hover:bg-gray-500"
                   >
                     {item.name}
-                  </a>
+                  </MyLink>
                 ))}
               </div>
-              <div className="relative ml-auto mr-2 text-gray-600 hidden sm:block">
+              <div className="relative hidden ml-auto mr-2 text-gray-600 sm:block">
                 {/*Search bar*/}
                 <input
-                  className="border-2 border-gray-300 bg-white h-10 px-2 rounded-lg text-sm focus:outline-none"
+                  className="h-10 px-2 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
                   type="search"
                   name="search"
                   placeholder="Search ..."
@@ -69,14 +87,14 @@ const Navbar = () => {
                 {/*Search icon*/}
                 <button
                   type="submit"
-                  className="absolute right-0 top-0 mt-3 mr-3"
+                  className="absolute top-0 right-0 mt-3 mr-3"
                 >
                   <SearchIcon className="w-4 h-4" />
                 </button>{" "}
               </div>
-              <div className="flex my-2 mr-2 p-2 space-x-2">
+              <div className="flex p-2 my-2 mr-2 space-x-2">
                 {/*Notification alert bell icon*/}
-                <BellIcon className="h-6 w-6" aria-hidden="true" />
+                <BellIcon className="w-6 h-6" aria-hidden="true" />
                 {/*Menu popup*/}
                 <Menu as="div">
                   <div>
@@ -95,37 +113,24 @@ const Navbar = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     {/*Profile circle items*/}
-                    <Menu.Items className="origin-top-right absolute right-2 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute w-48 py-1 mt-2 bg-white shadow-lg origin-top-right right-2 rounded-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <div className="flex flex-col m-2 ">
                         {profile_navigation.map((item) => (
                           <Menu.Item key={item.name}>
                             {({ active }) => (
-                              <a
+                              <MyLink
                                 href={item.href}
+                                onClick={item.onclick}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 {item.name}
-                              </a>
+                              </MyLink>
                             )}
                           </Menu.Item>
                         ))}
-                        <Menu.Item key="logout">
-                          {({ active }) => (
-                            <a
-                              onClick={() => signOut(auth)}
-                              href="#"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Log Out
-                            </a>
-                          )}
-                        </Menu.Item>
                       </div>
                     </Menu.Items>
                   </Transition>
@@ -147,10 +152,10 @@ const Navbar = () => {
                 </a>
               ))}
             </div>
-            <div className="inline-block relative text-gray-600 ml-4 mt-2">
+            <div className="relative inline-block mt-2 ml-4 text-gray-600">
               {/*Search bar*/}
               <input
-                className="border-2 border-gray-300 bg-white h-10 px-2 rounded-lg text-sm focus:outline-none mb-3"
+                className="h-10 px-2 mb-3 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
                 type="search"
                 name="search"
                 placeholder="Search ..."
@@ -159,7 +164,7 @@ const Navbar = () => {
               {/*need to fix search icon css styling*/}
               <button
                 type="submit"
-                className="relative right-7 top-1 mt-3 mr-3"
+                className="relative mt-3 mr-3 right-7 top-1"
               >
                 <SearchIcon className="w-4 h-4" />
               </button>{" "}
