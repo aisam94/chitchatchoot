@@ -9,7 +9,6 @@ import Navbar from "../components/Navbar";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp } from "@firebase/firestore";
-// import firebase from "firebase/compat/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
   //get user status from firebase modules
