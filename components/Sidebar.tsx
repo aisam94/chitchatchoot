@@ -52,7 +52,9 @@ const Sidebar = () => {
       </div>
       {/*Chat List*/}
       {chatSnapshot?.docs.map(function (chat) {
-        return <ChatList key={chat.id} id={chat.id} />;
+        return (
+          <ChatList key={chat.id} id={chat.id} users={chat.data().users} />
+        );
       })}
       {/**/}
       {/**/}
