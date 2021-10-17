@@ -2,7 +2,7 @@
 const getRecipientEmail = (users: any, usersLoggedIn: any) => {
   const result = users?.filter(
     (userToFilter: any) => userToFilter !== usersLoggedIn?.email
-  );
+  )[0];
 
   return result;
 };
