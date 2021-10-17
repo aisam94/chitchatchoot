@@ -6,7 +6,7 @@ import Loading from "../components/Loading";
 import Login from "./login";
 import Navbar from "../components/Navbar";
 
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase9-hooks/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp } from "@firebase/firestore";
 

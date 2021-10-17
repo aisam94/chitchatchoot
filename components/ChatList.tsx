@@ -1,5 +1,5 @@
 import { UserCircleIcon } from "@heroicons/react/solid";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase9-hooks/auth";
 import { auth } from "../firebase";
 import getRecipientEmail from "../lib/getRecipientEmail";
 
@@ -10,6 +10,7 @@ type Props = {
 
 const ChatList = ({ id, users }: Props) => {
   const [user] = useAuthState(auth);
+
   const recipientEmail = getRecipientEmail(users, user);
 
   return (
