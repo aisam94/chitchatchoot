@@ -3,18 +3,21 @@ import Head from "next/head";
 // import Image from "next/image";
 
 import Sidebar from "../components/Sidebar";
+import ChatScreen from "../components/ChatScreen";
 
 const Home: NextPage = () => {
   return (
-    <div className="h-full overflow-hidden">
+    <div className="page-height overflow-hidden">
       <Head>
         <title>ChitChatChoot</title>
         <meta name="description" content="Chitty chitty bang bang" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-full">
+      <main className="h-full flex">
         <Sidebar />
+        {/*ChatScreen is temporary*/}
+        <ChatScreen />
       </main>
 
       {/*

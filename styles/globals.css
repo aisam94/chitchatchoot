@@ -21,4 +21,10 @@
   .settings-text-width {
     @apply w-64;
   }
+  .chat-min-height {
+    min-height: 85%;
+  }
+  .page-height {
+    height: calc(100% - 3.9rem);
+  }
 }

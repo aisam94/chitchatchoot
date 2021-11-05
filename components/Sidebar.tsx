@@ -18,7 +18,7 @@ const Sidebar = () => {
   const [chatSnapshot] = useCollection(queryChat);
 
   return (
-    <div className="w-1/4 h-full bg-red-300">
+    <div className="w-1/4 h-full bg-gray-100">
       <UserBar />
 
       {/*Chat List*/}

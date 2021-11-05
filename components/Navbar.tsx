@@ -49,7 +49,7 @@ const profile_navigation = [
 
 const Navbar = () => {
   return (
-    <Disclosure as="nav" className="bg-gray-200">
+    <Disclosure as="nav" className="bg-gray-300 h-15">
       {({ open }) => (
         <>
           <div className="">
