@@ -92,15 +92,21 @@ const Navbar = () => {
                   <SearchIcon className="w-4 h-4" />
                 </button>{" "}
               </div>
-              <div className="flex p-2 my-2 mr-2 space-x-2">
+              <div className="flex mr-3 space-x-2">
                 {/*Notification alert bell icon*/}
-                <BellIcon className="w-6 h-6" aria-hidden="true" />
+                <BellIcon
+                  className="w-8 h-8 p-1 hover:text-gray-500 cursor-pointer"
+                  aria-hidden="true"
+                />
                 {/*Menu popup*/}
                 <Menu as="div">
                   <div>
                     <Menu.Button>
                       {/*Circle profile picture dropdown*/}
-                      <UserCircleIcon className="w-6 h-6" aria-hidden="true" />
+                      <UserCircleIcon
+                        className="w-8 h-8 p-1 hover:text-gray-500"
+                        aria-hidden="true"
+                      />
                     </Menu.Button>
                   </div>
                   <Transition

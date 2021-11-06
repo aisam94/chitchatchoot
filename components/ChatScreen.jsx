@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { auth, db } from "../firebase";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase9-hooks/auth";
 import { useCollection } from "react-firebase9-hooks/firestore";
-import { doc, collection, orderBy, query } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  orderBy,
+  query,
+  serverTimestamp,
+  addDoc,
+  setDoc,
+} from "firebase/firestore";
 import Message from "./Message";
 import TimeAgo from "timeago-react";
+import getRecipientEmail from "../lib/getRecipientEmail";
 
 import { Avatar } from "@mui/material";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
@@ -14,16 +23,20 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
-function ChatScreen() {
+function ChatScreen({ chat, messages }) {
   const [user] = useAuthState(auth);
+  const [input, setInput] = useState("");
   const router = useRouter();
 
-  // router.query.id may give error
-  // const chatRef = doc(db, "chats", router.query.id);
-  const chatRef = doc(db, "chats", "a");
+  const chatRef = doc(db, "chats", router.query.id);
   const messageRef = collection(chatRef, "messages");
   const messageQuery = query(messageRef, orderBy("timestamp", "asc"));
   const [messagesSnapshot] = useCollection(messageQuery);
+
+  console.log(messages);
+
+  // const recipientEmail = "example@gmail.com";
+  const recipientEmail = getRecipientEmail(chat.users, user);
 
   //map through message and create individual message box
   const showMessages = () => {
@@ -41,51 +54,80 @@ function ChatScreen() {
     }
   };
 
+  const sendMessage = (e) => {
+    e.preventDefault();
+    setDoc(
+      doc(db, "users", user.uid),
+      {
+        lastSeen: serverTimestamp(),
+      },
+      { merge: true }
+    );
+
+    addDoc(collection(doc(db, "chats", router.query.id), "messages"), {
+      timestamp: serverTimestamp(),
+      message: input,
+      user: user.email,
+      photoURL: user.photoURL,
+    });
+
+    setInput("");
+  };
+
   return (
     <div className="w-full overflow-y-hidden">
+      {/*header bar*/}
       <div className="flex items-center">
         {/*avatar/profile pic*/}
         <Avatar className="m-2" />
         <div className="flex-1 m-2">
           {/*chat name/title/team*/}
-          <p>example@gmail.com</p>
+          <p>{recipientEmail}</p>
           {/*last seen info*/}
           <p>
             Last seen :
             <TimeAgo datetime={"2021-11-04 19:06:08"} />
           </p>
         </div>
-        <div>
+        <div className="mx-2 space-x-1">
           {/*attach file*/}
-          <AttachFileIcon />
+          <AttachFileIcon className="hover:text-gray-500 cursor-pointer" />
           {/*settings/ three vertical dots*/}
-          <MoreVertIcon />
+          <MoreVertIcon className="hover:text-gray-500 cursor-pointer" />
         </div>
       </div>
       {/**/}
       {/**/}
-      {/*text area*/}
-      <div className="p-20 bg-gray-300 chat-min-height"></div>
-      {/*bottom chat bar*/}
+
+      {/*message text container*/}
+      <div className="p-20 bg-gray-300 chat-min-height">
+        <Message />
+      </div>
+
+      {/*message input container*/}
       <div className="flex items-center w-full">
         {/*insert emoji*/}
-        <InsertEmoticonIcon className="m-2" />
+        <InsertEmoticonIcon className="m-2 hover:text-gray-500 cursor-pointer" />
         {/*insert text here to chat*/}
         <input
           className="flex-1 h-10 px-2 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
           type="text"
           name="message"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Type your message"
         />
         {/*mic*/}
-        <MicIcon className="mx-1" />
+        <MicIcon className="mx-1 hover:text-gray-500 cursor-pointer" />
         {/*camera*/}
-        <PhotoCameraIcon className="mx-1" />
+        <PhotoCameraIcon className="mx-1 hover:text-gray-500 cursor-pointer" />
         {/*send text button*/}
         <input
           type="submit"
           value="Send"
-          className="text-black rounded-lg py-2 bg-gray-200 hover:bg-gray-500 m-2 p-3"
+          disabled={!input}
+          onClick={sendMessage}
+          className="p-3 py-2 m-2 text-black bg-gray-200 rounded-lg hover:bg-gray-500"
         />
         {/**/}
         {/**/}

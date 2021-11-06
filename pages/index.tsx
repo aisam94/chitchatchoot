@@ -16,8 +16,6 @@ const Home: NextPage = () => {
 
       <main className="h-full flex">
         <Sidebar />
-        {/*ChatScreen is temporary*/}
-        <ChatScreen />
       </main>
 
       {/*

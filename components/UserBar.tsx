@@ -23,8 +23,8 @@ export const UserBar: React.FC<{}> = () => {
     if (!input) return null;
     if (EmailValidator.validate(input) && input !== user?.email) {
       //add chats to db chats collection
-      // setDoc(doc(chatCollection), { users: [user.email, input] });
-      setDoc(doc(chatCollection, input), { users: [user?.email, input] }); // this one set recipient email as doc name
+      setDoc(doc(chatCollection), { users: [user?.email, input] });
+      // setDoc(doc(chatCollection, input), { users: [user?.email, input] }); // this one set recipient email as doc name
     }
   };
 
@@ -35,10 +35,10 @@ export const UserBar: React.FC<{}> = () => {
         <Avatar
           alt=""
           src={userPhotoUrl}
-          className="h-8 w-8 my-2 mr-2 rounded-full ring-2 ring-white"
+          className="mx-1 my-2 mr-2 rounded-full ring-1 ring-white"
         />
       ) : (
-        <Avatar className="h-8 w-8 my-2 mr-2 rounded-full ring-2 ring-white">
+        <Avatar className="mx-1 my-2 mr-2 rounded-full ring-2 ring-white">
           {user?.email[0]}
         </Avatar>
       )}
@@ -47,10 +47,10 @@ export const UserBar: React.FC<{}> = () => {
       {/*Add new chat/group*/}
       <PlusIcon
         onClick={createChat}
-        className="w-6 h-6 cursor-pointer ml-auto"
+        className="w-5 h-5 ml-4 hover:text-gray-500 cursor-pointer"
       />
       {/*3 vertical dots more settings*/}
-      <DotsVerticalIcon className="w-6 h-6 " />
+      <DotsVerticalIcon className="w-5 h-5 ml-1 hover:text-gray-500 cursor-pointer" />
       {/*Search in chat bar*/}
     </div>
   );
