@@ -32,8 +32,6 @@ function ChatScreen({ chat, messages }) {
   const messageRef = collection(chatRef, "messages");
   const messageQuery = query(messageRef, orderBy("timestamp", "asc"));
   const [messagesSnapshot] = useCollection(messageQuery);
-
-  // const recipientEmail = "example@gmail.com";
   const recipientEmail = getRecipientEmail(chat.users, user);
 
   //map through message and create individual message box
@@ -106,6 +104,7 @@ function ChatScreen({ chat, messages }) {
               <Message
                 key={chat.id}
                 user={chat.data().user}
+                recipient={recipientEmail}
                 message={chat.data().message}
                 timestamp={chat.data().timestamp?.toDate().toString()}
               />
