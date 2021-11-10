@@ -10,7 +10,7 @@ const Login: NextPage = () => {
   };
 
   return (
-    <div className="">
+    <div>
       <Head>
         <title>Login user</title>
         <meta name="description" content="login" />
@@ -21,14 +21,14 @@ const Login: NextPage = () => {
           <h1 className="font-bold text-xl">Sign in to your account</h1>
           <form className="flex flex-col space-y-4">
             {/*Input Form*/}
-            <div className="rounded-md shadow-md flex flex-col ">
+            <div className="rounded-md shadow-md flex flex-col">
               {/*Email*/}
               <input
                 type="email"
                 placeholder="Email address"
                 name="email"
                 value=""
-                className=" appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+                className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
                 required
               />
               {/*Password*/}
@@ -37,7 +37,7 @@ const Login: NextPage = () => {
                 placeholder="Password"
                 name="password"
                 value=""
-                className=" appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+                className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
                 required
               />
             </div>

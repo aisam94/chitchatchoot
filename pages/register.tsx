@@ -14,14 +14,14 @@ const Register: NextPage = () => {
         <div className="flex flex-col items-center space-y-5 mt-4">
           <h1 className="font-bold text-xl">Register your account</h1>
           <form className="flex flex-col space-y-4">
-            <div className="rounded-md shadow-md flex flex-col ">
+            <div className="rounded-md shadow-md flex flex-col">
               {/*Name*/}
               <input
                 type="name"
                 placeholder="Name"
                 name="name"
                 value=""
-                className=" appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+                className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
                 required
               />
               {/*Email*/}
@@ -30,7 +30,7 @@ const Register: NextPage = () => {
                 placeholder="Email address"
                 name="email"
                 value=""
-                className=" appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+                className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
                 required
               />
               {/*Password*/}
@@ -39,7 +39,7 @@ const Register: NextPage = () => {
                 placeholder="Password"
                 name="password"
                 value=""
-                className=" appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+                className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
                 required
               />
               {/*Password 2*/}
@@ -48,7 +48,7 @@ const Register: NextPage = () => {
                 placeholder="Reenter password"
                 name="password2"
                 value=""
-                className=" appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+                className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
                 required
               />
             </div>
