@@ -29,7 +29,7 @@ export const UserBar: React.FC<{}> = () => {
   };
 
   return (
-    <div className="flex items-center mx-2">
+    <div className="flex items-center px-2">
       {/*User logo circle*/}
       {userPhotoUrl ? (
         <Avatar
@@ -43,15 +43,18 @@ export const UserBar: React.FC<{}> = () => {
         </Avatar>
       )}
       {/*User name/email*/}
-      <p className="break-words text-sm">{user?.email}</p>
-      {/*Add new chat/group*/}
-      <PlusIcon
-        onClick={createChat}
-        className="w-5 h-5 ml-4 hover:text-gray-500 cursor-pointer"
-      />
-      {/*3 vertical dots more settings*/}
-      <DotsVerticalIcon className="w-5 h-5 ml-1 hover:text-gray-500 cursor-pointer" />
-      {/*Search in chat bar*/}
+      <p className="break-words text-sm userbar-name-width">{user?.email}</p>
+      {/* Clickable icons */}
+      <div className="flex mx-2 space-x-1">
+        {/*Add new chat/group*/}
+        <PlusIcon
+          onClick={createChat}
+          className="w-5 h-5 hover:text-gray-500 cursor-pointer"
+        />
+        {/*3 vertical dots more settings*/}
+        <DotsVerticalIcon className="w-5 h-5 hover:text-gray-500 cursor-pointer" />
+        {/*Search in chat bar*/}
+      </div>
     </div>
   );
 };

@@ -38,17 +38,14 @@ const ChatList = ({ id, users }: Props) => {
       {recipient ? (
         <Avatar
           alt=""
-          className="mx-2 rounded-full ring-2 ring-white"
+          className="mx-2 ring-2 ring-white"
           src={recipient?.photoURL}
         />
       ) : (
-        <Avatar className="mx-2 rounded-full ring-1 ring-white">
-          {recipientEmail[0]}
-        </Avatar>
+        <Avatar className="mx-2 ring-1 ring-white">{recipientEmail[0]}</Avatar>
       )}
       {/*Recipient email/ name*/}
-      {/*is putting recipient or just id is enough?*/}
-      <p>{recipientEmail}</p>
+      <p className="break-words chatlist-recipient-width ">{recipientEmail}</p>
       {/*Last update date*/}
       {/*Text snippets*/}
       {/*Circle unread messages*/}

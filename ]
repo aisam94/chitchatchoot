@@ -42,7 +42,7 @@ const ChatList = ({ id, users }: Props) => {
           src={recipient?.photoURL}
         />
       ) : (
-        <Avatar className=" rounded-full ring-1 ring-white">
+        <Avatar className="rounded-full ring-1 ring-white">
           {recipientEmail[0]}
         </Avatar>
       )}

@@ -21,10 +21,20 @@
   .settings-text-width {
     @apply w-64;
   }
-  .chat-min-height {
-    min-height: 85%;
+  .chat-container-height {
+    height: calc(100% - 120px);
+    /* height: 100%; */
   }
   .page-height {
     height: calc(100% - 3.9rem);
+  }
+  .chatlist-recipient-width {
+    width: calc(100% - 56px);
+  }
+  .userbar-name-width {
+    width: calc(100% - 100px);
+  }
+  .chatscreen-username-width {
+    width: calc(100% - 7rem);
   }
 }

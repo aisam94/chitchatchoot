@@ -72,7 +72,7 @@ function ChatScreen({ chat, messages }) {
   };
 
   return (
-    <div className="w-full overflow-y-hidden">
+    <div className="flex flex-col w-full overflow-y-hidden sm:w-3/4 ">
       {/*header bar*/}
       <div className="flex items-center">
         {/*avatar/profile pic*/}
@@ -86,6 +86,7 @@ function ChatScreen({ chat, messages }) {
             <TimeAgo datetime={"2021-11-04 19:06:08"} />
           </p>
         </div>
+        {/* icons */}
         <div className="mx-2 space-x-1">
           {/*attach file*/}
           <AttachFileIcon className="hover:text-gray-500 cursor-pointer" />
@@ -97,7 +98,7 @@ function ChatScreen({ chat, messages }) {
       {/**/}
 
       {/*message text container*/}
-      <div className="p-10 bg-gray-300 chat-min-height">
+      <div className="p-10 bg-gray-300 chat-container-height overflow-y-auto ">
         {messagesSnapshot &&
           messagesSnapshot.docs.map(function (chat) {
             return (
@@ -113,17 +114,17 @@ function ChatScreen({ chat, messages }) {
       </div>
 
       {/*message input container*/}
-      <div className="flex items-center w-full">
+      <div className="flex items-center bg-white ">
         {/*insert emoji*/}
         <InsertEmoticonIcon className="m-2 hover:text-gray-500 cursor-pointer" />
         {/*insert text here to chat*/}
         <input
-          className="flex-1 h-10 px-2 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
+          className="flex-1 w-full h-10 px-2 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
           type="text"
           name="message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message"
+          placeholder="Your message"
         />
         {/*mic*/}
         <MicIcon className="mx-1 hover:text-gray-500 cursor-pointer" />

@@ -49,10 +49,10 @@ const profile_navigation = [
 
 const Navbar = () => {
   return (
-    <Disclosure as="nav" className="bg-gray-300 h-15">
+    <Disclosure as="nav" className="bg-gray-300">
       {({ open }) => (
         <>
-          <div className="">
+          <div>
             <div className="relative flex items-center justify-between">
               {/*Menu toggle open items*/}
               <Disclosure.Button className="inline-flex items-center justify-center p-2 ml-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-500 sm:hidden">

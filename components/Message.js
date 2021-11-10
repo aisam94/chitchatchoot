@@ -6,7 +6,7 @@ function Message({ user, message, timestamp, recipient }) {
 
   if (recipient !== user) {
     return (
-      <div className="bg-white m-3 p-3 w-1/2 rounded-xl float-left clear-left ">
+      <div className="bg-white m-3 p-3 w-1/2 rounded-xl float-left clear-left break-words">
         <p>{message}</p>
         <p className="text-gray-400 float-right">{timeformatted}</p>
       </div>
