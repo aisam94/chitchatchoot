@@ -11,6 +11,30 @@ export const UserBar: React.FC<{}> = () => {
   const [user] = useAuthState(auth);
   const chatCollection = collection(db, "chats");
 
+  const userChatQuery = query(
+    chatCollection,
+    where("users", "array-contains", user?.email)
+  );
+  const [chatSnapshot] = useCollection(userChatQuery);
+
+  const chatAlreadyExist = (recipientEmail: any) => {
+    // !!chatSnapshot?.docs.find((chat) => {
+    //   chat.data().users.find((user: any) => user === recipientEmail)?.length >
+    //     0;
+    // });
+    //
+    //this could be slow as it iterates whole list
+    for (let i = 0; i < chatSnapshot?.docs.length; i++) {
+      const found = chatSnapshot?.docs[i]
+        .data()
+        .users.find((user: any) => user === recipientEmail);
+      if (found) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   //find user photo url
   const userCollection = collection(db, "users");
   const queryUser = query(userCollection, where("email", "==", user?.email));
@@ -21,7 +45,11 @@ export const UserBar: React.FC<{}> = () => {
   const createChat = () => {
     const input = prompt("Enter email address for user to chat with");
     if (!input) return null;
-    if (EmailValidator.validate(input) && input !== user?.email) {
+    if (
+      EmailValidator.validate(input) &&
+      input !== user?.email &&
+      !chatAlreadyExist(input)
+    ) {
       //add chats to db chats collection
       setDoc(doc(chatCollection), { users: [user?.email, input] });
       // setDoc(doc(chatCollection, input), { users: [user?.email, input] }); // this one set recipient email as doc name
@@ -43,16 +71,16 @@ export const UserBar: React.FC<{}> = () => {
         </Avatar>
       )}
       {/*User name/email*/}
-      <p className="break-words text-sm userbar-name-width">{user?.email}</p>
+      <p className="text-sm break-words userbar-name-width">{user?.email}</p>
       {/* Clickable icons */}
       <div className="flex mx-2 space-x-1">
         {/*Add new chat/group*/}
         <PlusIcon
           onClick={createChat}
-          className="w-5 h-5 hover:text-gray-500 cursor-pointer"
+          className="w-5 h-5 cursor-pointer hover:text-gray-500"
         />
         {/*3 vertical dots more settings*/}
-        <DotsVerticalIcon className="w-5 h-5 hover:text-gray-500 cursor-pointer" />
+        <DotsVerticalIcon className="w-5 h-5 cursor-pointer hover:text-gray-500" />
         {/*Search in chat bar*/}
       </div>
     </div>
