@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { auth, provider } from "../firebase";
-import { signInWithPopup } from "@firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 
 const Login: NextPage = () => {
   const signIn = () => {

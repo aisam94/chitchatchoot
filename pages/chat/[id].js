@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { auth, db } from "../../firebase";
 import getRecipientEmail from "../../lib/getRecipientEmail";
-import { useAuthState } from "react-firebase9-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import {
   doc,
   collection,
@@ -10,7 +10,7 @@ import {
   query,
   getDocs,
   getDoc,
-} from "@firebase/firestore";
+} from "firebase/firestore";
 
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";

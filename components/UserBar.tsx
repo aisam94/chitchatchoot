@@ -1,9 +1,9 @@
 import React from "react";
 import { DotsVerticalIcon, PlusIcon } from "@heroicons/react/outline";
 import { auth, db } from "../firebase";
-import { doc, setDoc, collection, query, where } from "@firebase/firestore";
-import { useAuthState } from "react-firebase9-hooks/auth";
-import { useCollection } from "react-firebase9-hooks/firestore";
+import { doc, setDoc, collection, query, where } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollection } from "react-firebase-hooks/firestore";
 import * as EmailValidator from "email-validator";
 import { Avatar } from "@mui/material";
 

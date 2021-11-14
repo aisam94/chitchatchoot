@@ -1,7 +1,7 @@
 import { auth, db } from "../firebase";
-import { collection, query, where } from "@firebase/firestore";
-import { useAuthState } from "react-firebase9-hooks/auth";
-import { useCollection } from "react-firebase9-hooks/firestore";
+import { collection, query, where } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollection } from "react-firebase-hooks/firestore";
 import ChatList from "./ChatList";
 import { UserBar } from "./UserBar";
 

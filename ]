@@ -1,9 +1,9 @@
-import { useAuthState } from "react-firebase9-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { auth, db } from "../firebase";
 import getRecipientEmail from "../lib/getRecipientEmail";
-import { collection, query, where } from "@firebase/firestore";
-import { useCollection } from "react-firebase9-hooks/firestore";
+import { collection, query, where } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 import { Avatar } from "@mui/material";
 
 type Props = {
