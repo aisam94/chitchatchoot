@@ -35,17 +35,36 @@ function ChatScreen({ chat, messages }) {
   const recipientEmail = getRecipientEmail(chat.users, user);
 
   //map through message and create individual message box
-  //this is written down there already
+  //this is not used btw
   const showMessages = () => {
     if (messagesSnapshot) {
-      return messagesSnapshot.docs.map(function (message) {
+      return (
+        <div>
+          {messagesSnapshot.docs.map(function (chat) {
+            <Message
+              key={chat.id}
+              user={chat.data().user}
+              recipient={recipientEmail}
+              message={chat.data().message}
+              timestamp={chat.data().timestamp?.toDate().toString()}
+            />;
+          })}
+        </div>
+      );
+      //
+      // return (
+      //   <div>
+      //     {["a", "b"].map((a) => (
+      //       <div>{a}</div>
+      //     ))}
+      //   </div>
+      // );
+    } else {
+      return JSON.parse(messages).map((message) => {
         <Message
           key={message.id}
-          user={message.data().user}
-          message={{
-            ...message.data(),
-            timestamp: message.data().timestamp?.toDate().getTime(),
-          }}
+          user={message.user}
+          message={message.message}
         />;
       });
     }
@@ -71,6 +90,16 @@ function ChatScreen({ chat, messages }) {
     setInput("");
   };
 
+  const handleKeyPress = (e) => {
+    // trigger when pressing enter
+    // if (e.charCode === 13) {
+    //   sendMessage(e);
+    // }
+    if (e.key === "Enter") {
+      sendMessage(e);
+    }
+  };
+
   return (
     <div className="flex flex-col w-full overflow-y-hidden sm:w-3/4 ">
       {/*header bar*/}
@@ -89,34 +118,46 @@ function ChatScreen({ chat, messages }) {
         {/* icons */}
         <div className="mx-2 space-x-1">
           {/*attach file*/}
-          <AttachFileIcon className="hover:text-gray-500 cursor-pointer" />
+          <AttachFileIcon className="cursor-pointer hover:text-gray-500" />
           {/*settings/ three vertical dots*/}
-          <MoreVertIcon className="hover:text-gray-500 cursor-pointer" />
+          <MoreVertIcon className="cursor-pointer hover:text-gray-500" />
         </div>
       </div>
       {/**/}
       {/**/}
 
       {/*message text container*/}
-      <div className="p-10 bg-gray-300 chat-container-height overflow-y-auto ">
-        {messagesSnapshot &&
-          messagesSnapshot.docs.map(function (chat) {
-            return (
-              <Message
-                key={chat.id}
-                user={chat.data().user}
-                recipient={recipientEmail}
-                message={chat.data().message}
-                timestamp={chat.data().timestamp?.toDate().toString()}
-              />
-            );
-          })}
+      <div className="p-10 overflow-y-auto bg-gray-300 chat-container-height ">
+        {messagesSnapshot
+          ? messagesSnapshot.docs.map(function (chat) {
+              return (
+                <Message
+                  key={chat.id}
+                  user={chat.data().user}
+                  recipient={recipientEmail}
+                  message={chat.data().message}
+                  timestamp={chat.data().timestamp?.toDate().toString()}
+                />
+              );
+            })
+          : JSON.parse(messages).map((chat) => {
+              return (
+                <Message
+                  key={chat.id}
+                  user={chat.user}
+                  recipient={recipientEmail}
+                  message={chat.message}
+                  timestamp={chat.timestamp}
+                />
+              );
+            })}
+        {/* {showMessages()} */}
       </div>
 
       {/*message input container*/}
       <div className="flex items-center bg-white ">
         {/*insert emoji*/}
-        <InsertEmoticonIcon className="m-2 hover:text-gray-500 cursor-pointer" />
+        <InsertEmoticonIcon className="m-2 cursor-pointer hover:text-gray-500" />
         {/*insert text here to chat*/}
         <input
           className="flex-1 w-full h-10 px-2 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
@@ -124,18 +165,19 @@ function ChatScreen({ chat, messages }) {
           name="message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyPress={(e) => handleKeyPress(e)}
           placeholder="Your message"
         />
         {/*mic*/}
-        <MicIcon className="mx-1 hover:text-gray-500 cursor-pointer" />
+        <MicIcon className="mx-1 cursor-pointer hover:text-gray-500" />
         {/*camera*/}
-        <PhotoCameraIcon className="mx-1 hover:text-gray-500 cursor-pointer" />
+        <PhotoCameraIcon className="mx-1 cursor-pointer hover:text-gray-500" />
         {/*send text button*/}
         <input
           type="submit"
           value="Send"
           disabled={!input}
-          onClick={sendMessage}
+          onClick={(e) => sendMessage(e)}
           className="p-3 py-2 m-2 text-black bg-gray-200 rounded-lg hover:bg-gray-500"
         />
         {/**/}

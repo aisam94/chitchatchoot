@@ -39,11 +39,12 @@ export default Chat;
 export async function getServerSideProps(context) {
   const ref = doc(db, "chats", context.query.id);
 
-  //prep message on the server
-  const messageCollection = collection(ref, "message");
+  //prep message on the server, fetch all chat messages
+  const messageCollection = collection(ref, "messages");
   const q = query(messageCollection, orderBy("timestamp", "asc"));
   const messagesRef = await getDocs(q);
 
+  //what this do?????
   const messages = messagesRef.docs
     .map((doc) => ({
       id: doc.id,
@@ -54,8 +55,7 @@ export async function getServerSideProps(context) {
       timestamp: messages.timestamp.toDate().getTime(),
     }));
 
-  //prep the chats
-  // const chatRef = await ref.get();
+  //prep the chats, fetch the chat document
   const chatRef = await getDoc(ref);
   const chat = {
     id: chatRef.id,
