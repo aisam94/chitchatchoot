@@ -1,9 +1,9 @@
-import { Circle } from "better-react-spinkit";
+import { SyncLoader } from "react-spinners";
 
 const Loading = () => {
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <Circle color="#9ca3af" size={120} />
+      <SyncLoader color="#9ca3af" loading={true} size={40} />
     </div>
   );
 };

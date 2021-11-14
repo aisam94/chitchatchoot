@@ -16,7 +16,6 @@
     "@heroicons/react": "^1.0.4",
     "@mui/icons-material": "^5.0.5",
     "@mui/material": "^5.0.4",
-    "better-react-spinkit": "^2.0.4",
     "dayjs": "^1.10.7",
     "email-validator": "^2.0.4",
     "firebase": "^9.1.2",
@@ -26,6 +25,7 @@
     "react-firebase-hooks": "^4.0.1",
     "react-firebase9-hooks": "^4.0.0-alpha.0",
     "react-promise": "^3.0.2",
+    "react-spinners": "^0.11.0",
     "timeago-react": "^3.0.4"
   },
   "devDependencies": {
