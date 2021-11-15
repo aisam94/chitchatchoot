@@ -8,6 +8,7 @@ import {
   collection,
   orderBy,
   query,
+  where,
   serverTimestamp,
   addDoc,
   setDoc,
@@ -33,6 +34,16 @@ function ChatScreen({ chat, messages }) {
   const messageQuery = query(messageRef, orderBy("timestamp", "asc"));
   const [messagesSnapshot] = useCollection(messageQuery);
   const recipientEmail = getRecipientEmail(chat.users, user);
+
+  const userRef = collection(db, "users");
+  const userQuery = query(
+    userRef,
+    where("email", "==", getRecipientEmail(chat.users, user))
+  );
+  const [recipientSnapshot] = useCollection(userQuery);
+  const recipientLastSeen = recipientSnapshot?.docs?.[0]
+    ?.data()
+    .lastSeen.toDate();
 
   //map through message and create individual message box
   //this is not used btw
@@ -100,6 +111,21 @@ function ChatScreen({ chat, messages }) {
     }
   };
 
+  const showLastSeen = () => {
+    if (recipientLastSeen !== undefined) {
+      return (
+        <p>
+          {/* last seen info */}
+          Last active:
+          <TimeAgo datetime={recipientLastSeen} />
+          {/* <TimeAgo datetime={"2021-11-04 19:06:08"} /> */}
+        </p>
+      );
+    } else {
+      return <p> Not active yet </p>;
+    }
+  };
+
   return (
     <div className="flex flex-col w-full overflow-y-hidden sm:w-3/4 ">
       {/*header bar*/}
@@ -109,11 +135,7 @@ function ChatScreen({ chat, messages }) {
         <div className="flex-1 m-2">
           {/*chat name/title/team*/}
           <p>{recipientEmail}</p>
-          {/*last seen info*/}
-          <p>
-            Last seen :
-            <TimeAgo datetime={"2021-11-04 19:06:08"} />
-          </p>
+          {showLastSeen()}
         </div>
         {/* icons */}
         <div className="mx-2 space-x-1">
