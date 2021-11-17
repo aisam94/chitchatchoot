@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { auth, db } from "../firebase";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -28,6 +28,7 @@ function ChatScreen({ chat, messages }) {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
   const router = useRouter();
+  const endOfMessageRef = useRef(null);
 
   const chatRef = doc(db, "chats", router.query.id);
   const messageRef = collection(chatRef, "messages");
@@ -44,6 +45,7 @@ function ChatScreen({ chat, messages }) {
   const recipientLastSeen = recipientSnapshot?.docs?.[0]
     ?.data()
     .lastSeen.toDate();
+  const recipientData = recipientSnapshot?.docs?.[0]?.data();
 
   //map through message and create individual message box
   //this is not used btw
@@ -99,6 +101,7 @@ function ChatScreen({ chat, messages }) {
     });
 
     setInput("");
+    scrollToBottom();
   };
 
   const handleKeyPress = (e) => {
@@ -126,15 +129,32 @@ function ChatScreen({ chat, messages }) {
     }
   };
 
+  const scrollToBottom = () => {
+    endOfMessageRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <div className="flex flex-col w-full overflow-y-hidden sm:w-3/4 ">
       {/*header bar*/}
       <div className="flex items-center">
         {/*avatar/profile pic*/}
-        <Avatar className="m-2" />
+        {recipientData ? (
+          <Avatar
+            alt=""
+            className="mx-2 ring-2 ring-white"
+            src={recipientData?.photoURL}
+          />
+        ) : (
+          <Avatar className="mx-2 ring-1 ring-white">
+            {recipientEmail[0]}
+          </Avatar>
+        )}
         <div className="flex-1 m-2">
-          {/*chat name/title/team*/}
-          <p>{recipientEmail}</p>
+          {/*username/title/team*/}
+          <p className="font-semibold">{recipientEmail}</p>
           {showLastSeen()}
         </div>
         {/* icons */}
@@ -174,6 +194,8 @@ function ChatScreen({ chat, messages }) {
               );
             })}
         {/* {showMessages()} */}
+        {/* End of message screen marker div */}
+        <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
       </div>
 
       {/*message input container*/}

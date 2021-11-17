@@ -33,7 +33,7 @@ const main_navigation = [
 ];
 
 const profile_navigation = [
-  { name: "Profile", href: "/profile" },
+  { name: "Profile", href: "/" },
   {
     name: "Settings",
     href: "/settings",
