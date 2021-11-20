@@ -24,15 +24,17 @@ export const UserBar: React.FC<{}> = () => {
     // });
     //
     //this could be slow as it iterates whole list
-    for (let i = 0; i < chatSnapshot?.docs.length; i++) {
-      const found = chatSnapshot?.docs[i]
-        .data()
-        .users.find((user: any) => user === recipientEmail);
-      if (found) {
-        return true;
+    if (chatSnapshot !== undefined) {
+      for (let i = 0; i < chatSnapshot?.docs.length; i++) {
+        const found = chatSnapshot?.docs[i]
+          .data()
+          .users.find((user: any) => user === recipientEmail);
+        if (found) {
+          return true;
+        }
       }
+      return false;
     }
-    return false;
   };
 
   //find user photo url
@@ -67,7 +69,7 @@ export const UserBar: React.FC<{}> = () => {
         />
       ) : (
         <Avatar className="mx-1 my-2 mr-2 rounded-full ring-2 ring-white">
-          {user?.email[0]}
+          {/* {user?.email[0]} */}
         </Avatar>
       )}
       {/*User name/email*/}
