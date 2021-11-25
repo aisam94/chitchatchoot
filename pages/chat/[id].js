@@ -19,7 +19,7 @@ function Chat({ chat, messages }) {
   const [user] = useAuthState(auth);
 
   return (
-    <div className="page-height flex">
+    <div className="h-full flex">
       <Head>
         <title>Chat with {getRecipientEmail(chat.users, user)}</title>
       </Head>

@@ -14,7 +14,7 @@ const Settings: NextPage = () => {
   return (
     <div>
       <main>
-        <div className="flex flex-col items-center space-y-5 mt-4">
+        <div className="flex flex-col items-center space-y-5 pt-4">
           <div>
             <h1 className="font-bold text-xl">Settings</h1>
           </div>
