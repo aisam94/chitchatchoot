@@ -4,7 +4,7 @@ import Sidebar from "../components/Sidebar";
 
 const Home: NextPage = () => {
   return (
-    <div className="page-height overflow-hidden">
+    <div className="h-full overflow-hidden">
       <Head>
         <title>ChitChatChoot</title>
         <meta name="description" content="Chitty chitty bang bang" />

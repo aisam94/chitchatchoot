@@ -36,7 +36,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Navbar />
-      {user ? <Component {...pageProps} /> : <Login />}
+      <div className="screen-height">
+        {user ? <Component {...pageProps} /> : <Login />}
+      </div>
     </>
   );
 }

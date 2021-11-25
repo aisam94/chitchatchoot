@@ -4,13 +4,10 @@
 @tailwind utilities;
 
 @layer components {
-  html,
-  body {
-    @apply h-full;
-  }
-  #__next {
-    height: 100%;
-  }
+  /* html, */
+  /* body { */
+  /*   height: 100%; */
+  /* } */
   .toggle-checkbox:checked {
     @apply right-0 border-blue-400;
   }
@@ -23,10 +20,6 @@
   }
   .chat-container-height {
     height: calc(100% - 120px);
-    /* height: 100%; */
-  }
-  .page-height {
-    height: calc(100% - 3.9rem);
   }
   .chatlist-recipient-width {
     width: calc(100% - 56px);
@@ -36,5 +29,8 @@
   }
   .chatscreen-username-width {
     width: calc(100% - 7rem);
+  }
+  .screen-height {
+    height: calc(100vh - 60px);
   }
 }
