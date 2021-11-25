@@ -27,6 +27,7 @@
     width: calc(100% - 7rem);
   }
   .screen-height {
+    /* 60px is the height of the navbar */
     height: calc(100vh - 60px);
     overflow: hidden;
   }
