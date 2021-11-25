@@ -4,10 +4,6 @@
 @tailwind utilities;
 
 @layer components {
-  /* html, */
-  /* body { */
-  /*   height: 100%; */
-  /* } */
   .toggle-checkbox:checked {
     @apply right-0 border-blue-400;
   }
@@ -32,5 +28,6 @@
   }
   .screen-height {
     height: calc(100vh - 60px);
+    overflow: hidden;
   }
 }
