@@ -106,9 +106,6 @@ function ChatScreen({ chat, messages }) {
 
   const handleKeyPress = (e) => {
     // trigger when pressing enter
-    // if (e.charCode === 13) {
-    //   sendMessage(e);
-    // }
     if (e.key === "Enter") {
       sendMessage(e);
     }
