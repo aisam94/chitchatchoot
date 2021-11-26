@@ -128,14 +128,14 @@ function ChatScreen({ chat, messages }) {
 
   const scrollToBottom = () => {
     endOfMessageRef.current.scrollIntoView({
-      behavior: "smooth",
+      behavior: "auto",
       block: "start",
     });
   };
 
   return (
     <div className="flex flex-col w-full overflow-y-hidden sm:w-3/4 ">
-      {/*header bar*/}
+      {/*HEADER BAR*/}
       <div className="flex items-center">
         {/*avatar/profile pic*/}
         {recipientData ? (
@@ -165,37 +165,40 @@ function ChatScreen({ chat, messages }) {
       {/**/}
       {/**/}
 
-      {/*message text container*/}
-      <div className="p-10 overflow-y-auto bg-gray-300 chat-container-height ">
-        {messagesSnapshot
-          ? messagesSnapshot.docs.map(function (chat) {
-              return (
-                <Message
-                  key={chat.id}
-                  user={chat.data().user}
-                  recipient={recipientEmail}
-                  message={chat.data().message}
-                  timestamp={chat.data().timestamp?.toDate().toString()}
-                />
-              );
-            })
-          : JSON.parse(messages).map((chat) => {
-              return (
-                <Message
-                  key={chat.id}
-                  user={chat.user}
-                  recipient={recipientEmail}
-                  message={chat.message}
-                  timestamp={chat.timestamp}
-                />
-              );
-            })}
-        {/* {showMessages()} */}
-        {/* End of message screen marker div */}
-        <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
+      {/*MESSAGE TEXT CONTAINER*/}
+      {/* {scrollToBottom()} */}
+      <div className="p-10 overflow-y-auto bg-gray-300 chat-container-height flex flex-col-reverse">
+        <div>
+          {messagesSnapshot
+            ? messagesSnapshot.docs.map(function (chat) {
+                return (
+                  <Message
+                    key={chat.id}
+                    user={chat.data().user}
+                    recipient={recipientEmail}
+                    message={chat.data().message}
+                    timestamp={chat.data().timestamp?.toDate().toString()}
+                  />
+                );
+              })
+            : JSON.parse(messages).map((chat) => {
+                return (
+                  <Message
+                    key={chat.id}
+                    user={chat.user}
+                    recipient={recipientEmail}
+                    message={chat.message}
+                    timestamp={chat.timestamp}
+                  />
+                );
+              })}
+          {/* {showMessages()} */}
+          {/* End of message screen marker div */}
+          <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
+        </div>
       </div>
 
-      {/*message input container*/}
+      {/*MESSAGE INPUT CONTAINER*/}
       <div className="flex items-center bg-white ">
         {/*insert emoji*/}
         <InsertEmoticonIcon className="m-2 cursor-pointer hover:text-gray-500" />
