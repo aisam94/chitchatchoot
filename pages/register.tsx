@@ -1,8 +1,45 @@
+import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
 
 const Register: NextPage = () => {
+  const createUser = (email: string, password: string) => {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
+
+  const submit = (e: any) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      // passwords not matching
+      console.log("password not matching");
+    } else {
+      createUser(email, password);
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { name, email, password, confirmPassword } = formData;
+
+  const change = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <div>
       <Head>
@@ -12,15 +49,16 @@ const Register: NextPage = () => {
       </Head>
       <main className="flex flex-col items-center space-y-5 pt-4">
         <h1 className="font-bold text-xl">Register your account</h1>
-        <form className="flex flex-col space-y-4">
+        <form className="flex flex-col space-y-4" onSubmit={(e) => submit(e)}>
           <div className="rounded-md shadow-md flex flex-col">
-            {/*Name*/}
+            {/*Username*/}
             <input
-              type="name"
+              type="text"
               placeholder="Name"
               name="name"
-              value=""
+              value={name}
               className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              onChange={(e) => change(e)}
               required
             />
             {/*Email*/}
@@ -28,8 +66,9 @@ const Register: NextPage = () => {
               type="email"
               placeholder="Email address"
               name="email"
-              value=""
+              value={email}
               className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              onChange={(e) => change(e)}
               required
             />
             {/*Password*/}
@@ -37,17 +76,19 @@ const Register: NextPage = () => {
               type="password"
               placeholder="Password"
               name="password"
-              value=""
+              value={password}
               className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              onChange={(e) => change(e)}
               required
             />
             {/*Password 2*/}
             <input
               type="password"
               placeholder="Reenter password"
-              name="password2"
-              value=""
+              name="confirmPassword"
+              value={confirmPassword}
               className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              onChange={(e) => change(e)}
               required
             />
           </div>
