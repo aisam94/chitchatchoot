@@ -4,7 +4,9 @@ import type { AppProps } from "next/app";
 
 import Loading from "../components/Loading";
 import Login from "./login";
+import Register from "./register";
 import Navbar from "../components/Navbar";
+import { useRouter } from "next/router";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
@@ -13,6 +15,7 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 function MyApp({ Component, pageProps }: AppProps) {
   //get user status from firebase modules
   const [user, loading] = useAuthState(auth);
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -24,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {
           email: user.email,
           lastSeen: serverTimestamp(),
-          photoURL: user.photoURL,
+          photoURL: user?.photoURL,
         },
         { merge: true }
       );
@@ -37,7 +40,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Navbar />
       <div className="screen-height">
-        {user ? <Component {...pageProps} /> : <Login />}
+        {user ? (
+          <Component {...pageProps} />
+        ) : router.pathname === "/register" ? (
+          <Register />
+        ) : (
+          <Login />
+        )}
       </div>
     </>
   );
