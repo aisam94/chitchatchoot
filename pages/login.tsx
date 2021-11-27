@@ -3,11 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { auth, provider } from "../firebase";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const Login: NextPage = () => {
   const signInWithGoogle = () => {
@@ -31,7 +27,6 @@ const Login: NextPage = () => {
   };
 
   const signIn = (email: string, password: string) => {
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -47,7 +42,7 @@ const Login: NextPage = () => {
       <Head>
         <title>Login user</title>
         <meta name="description" content="login" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="" />
       </Head>
       <main className="flex flex-col items-center space-y-5 pt-4">
         <h1 className="text-xl font-bold">Sign in to your account</h1>

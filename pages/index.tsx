@@ -8,11 +8,14 @@ const Home: NextPage = () => {
       <Head>
         <title>ChitChatChoot</title>
         <meta name="description" content="Chitty chitty bang bang" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="" />
       </Head>
 
       <main className="h-full flex">
         <Sidebar />
+        <div className="flex w-full sm:w-3/4 bg-gray-200 items-center justify-center text-xl font-bold">
+          No chat is selected
+        </div>
       </main>
     </div>
   );

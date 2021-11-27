@@ -2,11 +2,11 @@ import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { auth } from "../firebase";
 
 const Register: NextPage = () => {
   const createUser = (email: string, password: string) => {
-    const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -45,7 +45,7 @@ const Register: NextPage = () => {
       <Head>
         <title>Register user</title>
         <meta name="description" content="register" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="" />
       </Head>
       <main className="flex flex-col items-center space-y-5 pt-4">
         <h1 className="font-bold text-xl">Register your account</h1>

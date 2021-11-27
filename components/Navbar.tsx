@@ -10,7 +10,8 @@ import { ChatIcon } from "@heroicons/react/solid";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -42,7 +43,7 @@ const profile_navigation = [
     name: "Log out",
     href: "",
     onclick() {
-      signOut(getAuth());
+      signOut(auth);
     },
   },
 ];
