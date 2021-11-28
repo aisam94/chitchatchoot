@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {
           email: user.email,
           lastSeen: serverTimestamp(),
-          photoURL: user?.photoURL,
+          photoURL: user.photoURL,
         },
         { merge: true }
       );

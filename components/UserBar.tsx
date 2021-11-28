@@ -42,6 +42,7 @@ export const UserBar: React.FC<{}> = () => {
   const queryUser = query(userCollection, where("email", "==", user?.email));
   const [userSnapshot] = useCollection(queryUser);
   const userPhotoUrl = userSnapshot?.docs?.[0].data().photoURL;
+  const userFirstLetter = user?.email !== null ? user?.email[0] : "";
 
   //create chat by entering recipient email via prompt
   const createChat = () => {
@@ -69,11 +70,13 @@ export const UserBar: React.FC<{}> = () => {
         />
       ) : (
         <Avatar className="mx-1 my-2 mr-2 rounded-full ring-2 ring-white">
-          {/* {user?.email[0]} */}
+          {userFirstLetter}
         </Avatar>
       )}
       {/*User name/email*/}
-      <p className="text-sm break-words userbar-name-width">{user?.email}</p>
+      <p className="text-sm break-words userbar-name-width font-semibold">
+        {user?.email}
+      </p>
       {/* Clickable icons */}
       <div className="flex mx-2 space-x-1">
         {/*Add new chat/group*/}

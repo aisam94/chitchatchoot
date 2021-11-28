@@ -9,46 +9,50 @@ import {
 import { ChatIcon } from "@heroicons/react/solid";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
-
-function MyLink(props: any) {
-  let { href, children, ...rest } = props;
-
-  return (
-    <Link href={href}>
-      <a {...rest}>{children}</a>
-    </Link>
-  );
-}
-
-const main_navigation = [
-  { name: "Home", href: "/" },
-  { name: "Groups", href: "#" },
-  { name: "Message", href: "#" },
-];
-
-const profile_navigation = [
-  { name: "Profile", href: "/" },
-  {
-    name: "Settings",
-    href: "/settings",
-  },
-  {
-    name: "Log out",
-    href: "",
-    onclick() {
-      signOut(auth);
-    },
-  },
-];
-
 const Navbar = () => {
+  const router = useRouter();
+
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  function MyLink(props: any) {
+    let { href, children, ...rest } = props;
+
+    return (
+      <Link href={href}>
+        <a {...rest}>{children}</a>
+      </Link>
+    );
+  }
+
+  const main_navigation = [
+    { name: "Home", href: "/" },
+    { name: "Groups", href: "#" },
+    { name: "Message", href: "#" },
+  ];
+
+  const profile_navigation = [
+    { name: "Profile", href: "/" },
+    {
+      name: "Settings",
+      href: "/settings",
+    },
+    {
+      name: "Log out",
+      href: "",
+      onclick() {
+        router.push("/");
+        signOut(auth);
+      },
+    },
+  ];
+
   return (
     <Disclosure as="nav" className="bg-gray-300">
       {({ open }) => (

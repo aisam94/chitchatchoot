@@ -4,8 +4,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { auth, provider } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useRouter } from "next/router";
 
 const Login: NextPage = () => {
+  const router = useRouter();
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).catch(alert);
   };
@@ -24,6 +26,7 @@ const Login: NextPage = () => {
   const submit = (e: any) => {
     e.preventDefault();
     signIn(email, password);
+    router.push("/");
   };
 
   const signIn = (email: string, password: string) => {

@@ -48,39 +48,36 @@ function ChatScreen({ chat, messages }) {
   const recipientData = recipientSnapshot?.docs?.[0]?.data();
 
   //map through message and create individual message box
-  //this is not used btw
   const showMessages = () => {
-    if (messagesSnapshot) {
-      return (
-        <div>
-          {messagesSnapshot.docs.map(function (chat) {
-            <Message
-              key={chat.id}
-              user={chat.data().user}
-              recipient={recipientEmail}
-              message={chat.data().message}
-              timestamp={chat.data().timestamp?.toDate().toString()}
-            />;
-          })}
-        </div>
-      );
-      //
-      // return (
-      //   <div>
-      //     {["a", "b"].map((a) => (
-      //       <div>{a}</div>
-      //     ))}
-      //   </div>
-      // );
-    } else {
-      return JSON.parse(messages).map((message) => {
-        <Message
-          key={message.id}
-          user={message.user}
-          message={message.message}
-        />;
-      });
-    }
+    return (
+      <div>
+        {messagesSnapshot
+          ? messagesSnapshot.docs.map((chat) => {
+              return (
+                <Message
+                  key={chat.id}
+                  user={chat.data().user}
+                  recipient={recipientEmail}
+                  message={chat.data().message}
+                  timestamp={chat.data().timestamp?.toDate().toString()}
+                />
+              );
+            })
+          : JSON.parse(messages).map((chat) => {
+              return (
+                <Message
+                  key={chat.id}
+                  user={chat.user}
+                  recipient={recipientEmail}
+                  message={chat.message}
+                  timestamp={chat.timestamp}
+                />
+              );
+            })}
+        {/* End of message screen marker div */}
+        <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
+      </div>
+    );
   };
 
   const sendMessage = (e) => {
@@ -138,7 +135,7 @@ function ChatScreen({ chat, messages }) {
       {/*HEADER BAR*/}
       <div className="flex items-center">
         {/*avatar/profile pic*/}
-        {recipientData ? (
+        {recipientData && recipientData?.photoURL !== null ? (
           <Avatar
             alt=""
             className="mx-2 ring-2 ring-white"
@@ -167,39 +164,12 @@ function ChatScreen({ chat, messages }) {
 
       {/*MESSAGE TEXT CONTAINER*/}
       {/* {scrollToBottom()} */}
-      <div className="p-10 overflow-y-auto bg-gray-300 chat-container-height flex flex-col-reverse">
-        <div>
-          {messagesSnapshot
-            ? messagesSnapshot.docs.map(function (chat) {
-                return (
-                  <Message
-                    key={chat.id}
-                    user={chat.data().user}
-                    recipient={recipientEmail}
-                    message={chat.data().message}
-                    timestamp={chat.data().timestamp?.toDate().toString()}
-                  />
-                );
-              })
-            : JSON.parse(messages).map((chat) => {
-                return (
-                  <Message
-                    key={chat.id}
-                    user={chat.user}
-                    recipient={recipientEmail}
-                    message={chat.message}
-                    timestamp={chat.timestamp}
-                  />
-                );
-              })}
-          {/* {showMessages()} */}
-          {/* End of message screen marker div */}
-          <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
-        </div>
+      <div className="p-10 overflow-y-auto bg-gray-300 chat-container-height flex flex-col-reverse border-2">
+        {showMessages()}
       </div>
 
       {/*MESSAGE INPUT CONTAINER*/}
-      <div className="flex items-center bg-white ">
+      <div className="flex items-center bg-white">
         {/*insert emoji*/}
         <InsertEmoticonIcon className="m-2 cursor-pointer hover:text-gray-500" />
         {/*insert text here to chat*/}

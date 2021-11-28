@@ -4,8 +4,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../firebase";
+import { useRouter } from "next/router";
 
 const Register: NextPage = () => {
+  const router = useRouter();
   const createUser = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -24,6 +26,7 @@ const Register: NextPage = () => {
       console.log("password not matching");
     } else {
       createUser(email, password);
+      router.push("/");
     }
   };
 

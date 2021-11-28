@@ -35,7 +35,7 @@ const ChatList = ({ id, users }: Props) => {
       onClick={enterChat}
     >
       {/*Recipient circle logo*/}
-      {recipient ? (
+      {recipient && recipient?.photoURL !== null ? (
         <Avatar
           alt=""
           className="mx-2 ring-2 ring-white"
