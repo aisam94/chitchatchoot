@@ -1,7 +1,14 @@
 import React from "react";
 import dayjs from "dayjs";
 
-function Message({ user, message, timestamp, recipient }) {
+type Props = {
+  user: any;
+  message: any;
+  timestamp: any;
+  recipient: any;
+};
+
+const Message = ({ user, message, timestamp, recipient }: Props) => {
   const timeformatted = dayjs(timestamp).format("h:mm A");
 
   if (recipient !== user) {
@@ -19,6 +26,6 @@ function Message({ user, message, timestamp, recipient }) {
       </div>
     );
   }
-}
+};
 
 export default Message;
