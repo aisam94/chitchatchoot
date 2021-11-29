@@ -51,47 +51,31 @@ function ChatScreen({ chat, messages }) {
   const showMessages = () => {
     return (
       <div>
-        {/* {messagesSnapshot */}
-        {/*   ? messagesSnapshot.docs.map((chat) => { */}
-        {/*       return ( */}
-        {/*         <Message */}
-        {/*           key={chat.id} */}
-        {/*           user={chat.data().user} */}
-        {/*           recipient={recipientEmail} */}
-        {/*           message={chat.data().message} */}
-        {/*           timestamp={chat.data().timestamp?.toDate().toString()} */}
-        {/*         /> */}
-        {/*       ); */}
-        {/*     }) */}
-        {/*   : JSON.parse(messages).map((chat) => { */}
-        {/*       return ( */}
-        {/*         <Message */}
-        {/*           key={chat.id} */}
-        {/*           user={chat.user} */}
-        {/*           recipient={recipientEmail} */}
-        {/*           message={chat.message} */}
-        {/*           timestamp={chat.timestamp} */}
-        {/*         /> */}
-        {/*       ); */}
-        {/*     })} */}
-        {/* {/1* End of message screen marker div *1/} */}
-        {/* <div className="mb-12 clear-both " ref={endOfMessageRef}></div> */}
-
-        {messagesSnapshot ? (
-          messagesSnapshot.docs.map((chat) => {
-            return (
-              <Message
-                key={chat.id}
-                user={chat.data().user}
-                recipient={recipientEmail}
-                message={chat.data().message}
-                timestamp={chat.data().timestamp?.toDate().toString()}
-              />
-            );
-          })
-        ) : (
-          <div>kdfjafl</div>
-        )}
+        {messagesSnapshot
+          ? messagesSnapshot.docs.map((chat) => {
+              return (
+                <Message
+                  key={chat.id}
+                  user={chat.data().user}
+                  recipient={recipientEmail}
+                  message={chat.data().message}
+                  timestamp={chat.data().timestamp?.toDate().toString()}
+                />
+              );
+            })
+          : JSON.parse(messages).map((chat) => {
+              return (
+                <Message
+                  key={chat.id}
+                  user={chat.user}
+                  recipient={recipientEmail}
+                  message={chat.message}
+                  timestamp={chat.timestamp}
+                />
+              );
+            })}
+        {/* End of message screen marker div */}
+        <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
       </div>
     );
   };

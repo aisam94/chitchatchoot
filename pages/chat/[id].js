@@ -12,51 +12,43 @@ import {
   getDoc,
 } from "firebase/firestore";
 
+import { useRouter } from "next/router";
+
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";
 
-function Chat() {
+function Chat({ chat, messages }) {
   const [user] = useAuthState(auth);
+  // const router = useRouter();
+  // const { id } = router.query;
 
-  const chat = {
-    id: "ppF986hxDb7FJO26nXfl",
-    users: ["pulldtrigger94@gmail.com", "mario@gmail.com"],
-  };
+  ////start of attempt
+  //const ref = doc(db, "chats", id);
 
-  const messages = [
-    {
-      id: "nlluHgsHTvx6a7bz0qB9",
-      photoURL:
-        "https://lh3.googleusercontent.com/a/AATXAJwI3SqQQoLotKbDWITo3zMMAHaa5LtzOikTkK7F=s96-c",
-      user: "pulldtrigger94@gmail.com",
-      timestamp: 1636209961081,
-      message: "hello world",
-    },
-    {
-      id: "Y1wFFj9hKfzrSjKJ8i4o",
-      user: "pulldtrigger94@gmail.com",
-      message: "hiya",
-      photoURL:
-        "https://lh3.googleusercontent.com/a/AATXAJwI3SqQQoLotKbDWITo3zMMAHaa5LtzOikTkK7F=s96-c",
-      timestamp: 1636209966759,
-    },
-    {
-      id: "hsK73UCeBGFPfaQWIjtY",
-      timestamp: 1636285696220,
-      photoURL:
-        "https://lh3.googleusercontent.com/a/AATXAJwI3SqQQoLotKbDWITo3zMMAHaa5LtzOikTkK7F=s96-c",
-      message: "its a you mario",
-      user: "pulldtrigger94@gmail.com",
-    },
-    {
-      id: "ZAgHMIZWu8SioZPouKHd",
-      user: "pulldtrigger94@gmail.com",
-      timestamp: 1636822508330,
-      message: "kjkjjfa",
-      photoURL:
-        "https://lh3.googleusercontent.com/a/AATXAJwI3SqQQoLotKbDWITo3zMMAHaa5LtzOikTkK7F=s96-c",
-    },
-  ];
+  ////prep message on the server, fetch all chat messages
+  //const messageCollection = collection(ref, "messages");
+  //const q = query(messageCollection, orderBy("timestamp", "asc"));
+  //const messagesRef = getDocs(q);
+
+  ////populate the array with data from messages database and change timestamp with different format
+  //const messages = messagesRef.docs
+  //  .map((doc) => ({
+  //    id: doc.id,
+  //    ...doc.data(),
+  //  }))
+  //  .map((messages) => ({
+  //    ...messages,
+  //    timestamp: messages.timestamp.toDate().getTime(),
+  //  }));
+
+  ////prep the chats, fetch the chat document
+  //const chatRef = getDoc(ref);
+  //const chat = {
+  //  id: chatRef.id,
+  //  ...chatRef.data(),
+  //};
+
+  ////end of attempt
 
   return (
     <div className="h-full flex">
@@ -76,38 +68,36 @@ function Chat() {
 
 export default Chat;
 
-//export async function getServerSideProps(context) {
-//  const ref = doc(db, "chats", context.query.id);
+export async function getServerSideProps(context) {
+  const ref = doc(db, "chats", context.query.id);
 
-//  //prep message on the server, fetch all chat messages
-//  const messageCollection = collection(ref, "messages");
-//  const q = query(messageCollection, orderBy("timestamp", "asc"));
-//  const messagesRef = await getDocs(q);
+  //prep message on the server, fetch all chat messages
+  const messageCollection = collection(ref, "messages");
+  const q = query(messageCollection, orderBy("timestamp", "asc"));
+  const messagesRef = await getDocs(q);
 
-//  //populate the array with data from messages database and change timestamp with different format
-//  const messages = messagesRef.docs
-//    .map((doc) => ({
-//      id: doc.id,
-//      ...doc.data(),
-//    }))
-//    .map((messages) => ({
-//      ...messages,
-//      timestamp: messages.timestamp.toDate().getTime(),
-//    }));
+  //populate the array with data from messages database and change timestamp with different format
+  const messages = messagesRef.docs
+    .map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+    .map((messages) => ({
+      ...messages,
+      timestamp: messages.timestamp.toDate().getTime(),
+    }));
 
-//  //prep the chats, fetch the chat document
-//  const chatRef = await getDoc(ref);
-//  const chat = {
-//    id: chatRef.id,
-//    ...chatRef.data(),
-//  };
+  //prep the chats, fetch the chat document
+  const chatRef = await getDoc(ref);
+  const chat = {
+    id: chatRef.id,
+    ...chatRef.data(),
+  };
 
-//  console.log({ messages });
-
-//  return {
-//    props: {
-//      messages: JSON.stringify(messages),
-//      chat: chat,
-//    },
-//  };
-//}
+  return {
+    props: {
+      messages: JSON.stringify(messages),
+      chat: chat,
+    },
+  };
+}
