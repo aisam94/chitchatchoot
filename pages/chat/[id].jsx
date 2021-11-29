@@ -20,9 +20,8 @@ import Sidebar from "../../components/Sidebar";
 function Chat() {
   const [user] = useAuthState(auth);
   const router = useRouter();
-  const chatID = router.query.id;
 
-  const chatRef = doc(db, "chats", chatID);
+  const chatRef = doc(db, "chats", router.query.id);
   const [chatSnapshot] = useDocument(chatRef);
   const chatData = chatSnapshot?.data();
 
