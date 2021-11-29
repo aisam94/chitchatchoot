@@ -13,11 +13,17 @@ import {
 } from "firebase/firestore";
 
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";
 
-function Chat({ chat, messages }) {
+type Props = {
+  chat: any;
+  messages: any;
+};
+
+function Chat({ chat, messages }: Props) {
   const [user] = useAuthState(auth);
   // const router = useRouter();
   // const { id } = router.query;
@@ -68,7 +74,8 @@ function Chat({ chat, messages }) {
 
 export default Chat;
 
-export async function getServerSideProps(context) {
+// export async function getServerSideProps(context) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const ref = doc(db, "chats", context.query.id);
 
   //prep message on the server, fetch all chat messages
@@ -100,4 +107,4 @@ export async function getServerSideProps(context) {
       chat: chat,
     },
   };
-}
+};
