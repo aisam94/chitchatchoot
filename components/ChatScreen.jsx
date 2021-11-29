@@ -24,7 +24,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
-function ChatScreen({ chat, messages }) {
+function ChatScreen({ chat }) {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
   const router = useRouter();
@@ -34,6 +34,7 @@ function ChatScreen({ chat, messages }) {
   const messageRef = collection(chatRef, "messages");
   const messageQuery = query(messageRef, orderBy("timestamp", "asc"));
   const [messagesSnapshot] = useCollection(messageQuery);
+
   const recipientEmail = getRecipientEmail(chat.users, user);
 
   const userRef = collection(db, "users");
@@ -51,29 +52,43 @@ function ChatScreen({ chat, messages }) {
   const showMessages = () => {
     return (
       <div>
-        {messagesSnapshot
-          ? messagesSnapshot.docs.map((chat) => {
-              return (
-                <Message
-                  key={chat.id}
-                  user={chat.data().user}
-                  recipient={recipientEmail}
-                  message={chat.data().message}
-                  timestamp={chat.data().timestamp?.toDate().toString()}
-                />
-              );
-            })
-          : JSON.parse(messages).map((chat) => {
-              return (
-                <Message
-                  key={chat.id}
-                  user={chat.user}
-                  recipient={recipientEmail}
-                  message={chat.message}
-                  timestamp={chat.timestamp}
-                />
-              );
-            })}
+        {/* this one uses server side render */}
+        {/* {messagesSnapshot */}
+        {/*   ? messagesSnapshot.docs.map((chat) => { */}
+        {/*       return ( */}
+        {/*         <Message */}
+        {/*           key={chat.id} */}
+        {/*           user={chat.data().user} */}
+        {/*           recipient={recipientEmail} */}
+        {/*           message={chat.data().message} */}
+        {/*           timestamp={chat.data().timestamp?.toDate().toString()} */}
+        {/*         /> */}
+        {/*       ); */}
+        {/*     }) */}
+        {/*   : JSON.parse(messages).map((chat) => { */}
+        {/*       return ( */}
+        {/*         <Message */}
+        {/*           key={chat.id} */}
+        {/*           user={chat.user} */}
+        {/*           recipient={recipientEmail} */}
+        {/*           message={chat.message} */}
+        {/*           timestamp={chat.timestamp} */}
+        {/*         /> */}
+        {/*       ); */}
+        {/*     })} */}
+
+        {messagesSnapshot &&
+          messagesSnapshot.docs.map((chat) => {
+            return (
+              <Message
+                key={chat.id}
+                user={chat.data().user}
+                recipient={recipientEmail}
+                message={chat.data().message}
+                timestamp={chat.data().timestamp?.toDate().toString()}
+              />
+            );
+          })}
         {/* End of message screen marker div */}
         <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
       </div>
