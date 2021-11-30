@@ -10,7 +10,20 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/outline";
 
+import { useRouter } from "next/router";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
 const Settings: NextPage = () => {
+  const router = useRouter();
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    //this stop from registering normal click to trigger this, maybe error due to typescript
+    event.stopPropagation();
+    router.push("/");
+    signOut(auth);
+  };
+
   return (
     <div>
       <main>
@@ -101,7 +114,10 @@ const Settings: NextPage = () => {
               </label>
             </div>
             {/*log out*/}
-            <div className="flex space-x-2 hover:bg-gray-200">
+            <div
+              className="flex space-x-2 hover:bg-gray-200"
+              onClick={(e) => handleClick(e)}
+            >
               <LogoutIcon className="h-6 w-6 transform rotate-180" />
               <label className="select-none settings-text-width cursor-pointer">
                 Log out of account
