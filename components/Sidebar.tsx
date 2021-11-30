@@ -11,10 +11,9 @@ const Sidebar = () => {
   //create snapshot of doc of chat that has user email
   const chatCollection = collection(db, "chats");
   //this give error when logging out
-  const queryChat = query(
-    chatCollection,
-    where("users", "array-contains", user?.email)
-  );
+  const queryChat = user
+    ? query(chatCollection, where("users", "array-contains", user?.email))
+    : undefined;
   const [chatSnapshot] = useCollection(queryChat);
 
   return (

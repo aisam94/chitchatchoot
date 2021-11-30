@@ -11,10 +11,9 @@ export const UserBar: React.FC<{}> = () => {
   const [user] = useAuthState(auth);
   const chatCollection = collection(db, "chats");
 
-  const userChatQuery = query(
-    chatCollection,
-    where("users", "array-contains", user?.email)
-  );
+  const userChatQuery = user
+    ? query(chatCollection, where("users", "array-contains", user?.email))
+    : undefined;
   const [chatSnapshot] = useCollection(userChatQuery);
 
   const chatAlreadyExist = (recipientEmail: any) => {
@@ -39,7 +38,9 @@ export const UserBar: React.FC<{}> = () => {
 
   //find user photo url
   const userCollection = collection(db, "users");
-  const queryUser = query(userCollection, where("email", "==", user?.email));
+  const queryUser = user
+    ? query(userCollection, where("email", "==", user?.email))
+    : undefined;
   const [userSnapshot] = useCollection(queryUser);
   const userPhotoUrl = userSnapshot?.docs?.[0].data().photoURL;
   const userFirstLetter = user?.email !== null ? user?.email[0] : "";
