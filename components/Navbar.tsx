@@ -40,6 +40,11 @@ const Navbar = () => {
     },
     { name: "Groups", href: "#", className: "p-2 rounded-md text-gray-500" },
     { name: "Message", href: "#", className: "p-2 rounded-md text-gray-500" },
+    {
+      name: "About",
+      href: "/about",
+      className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+    },
   ];
 
   const profile_navigation = [
