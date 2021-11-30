@@ -33,7 +33,9 @@ function Chat() {
         )}
       </Head>
       {/*sidebar*/}
-      <Sidebar />
+      <div className="hidden sm:flex sm:w-1/4 h-full">
+        <Sidebar />
+      </div>
       {/*chat container*/}
       {chatSnapshot && <ChatScreen chat={chatData} />}
     </div>

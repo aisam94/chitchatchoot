@@ -31,10 +31,15 @@ const Navbar = () => {
     );
   }
 
+  //groups and message is disabled for now
   const main_navigation = [
-    { name: "Home", href: "/" },
-    { name: "Groups", href: "#" },
-    { name: "Message", href: "#" },
+    {
+      name: "Home",
+      href: "/",
+      className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+    },
+    { name: "Groups", href: "#", className: "p-2 rounded-md text-gray-500" },
+    { name: "Message", href: "#", className: "p-2 rounded-md text-gray-500" },
   ];
 
   const profile_navigation = [
@@ -68,14 +73,16 @@ const Navbar = () => {
                 )}
               </Disclosure.Button>
               {/*Website logo */}
-              <ChatIcon className="m-3 w-9 h-9" />
+              <Link href="/" passHref>
+                <ChatIcon className=" w-9 h-9 cursor-pointer m-3" />
+              </Link>
               {/*Item text*/}
               <div className="hidden space-x-5 sm:flex">
                 {main_navigation.map((item) => (
                   <MyLink
                     key={item.name}
                     href={item.href}
-                    className="p-2 rounded-md hover:text-white hover:bg-gray-500"
+                    className={item.className}
                   >
                     {item.name}
                   </MyLink>
@@ -99,17 +106,17 @@ const Navbar = () => {
               </div>
               <div className="flex mr-3 space-x-2">
                 {/*Notification alert bell icon*/}
-                <BellIcon
-                  className="w-8 h-8 p-1 hover:text-gray-500 cursor-pointer"
-                  aria-hidden="true"
-                />
+                {/* <BellIcon */}
+                {/*   className="w-8 h-8 p-1 hover:text-gray-500 cursor-pointer" */}
+                {/*   aria-hidden="true" */}
+                {/* /> */}
                 {/*Menu popup*/}
                 <Menu as="div">
                   <div>
                     <Menu.Button>
                       {/*Circle profile picture dropdown*/}
                       <UserCircleIcon
-                        className="w-8 h-8 p-1 hover:text-gray-500"
+                        className="w-9 h-9 p-1 hover:text-gray-500"
                         aria-hidden="true"
                       />
                     </Menu.Button>
@@ -154,11 +161,7 @@ const Navbar = () => {
             {/*item text*/}
             <div className="flex flex-col mx-4 space-y-2">
               {main_navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="p-2 rounded-md hover:text-white hover:bg-gray-500"
-                >
+                <a key={item.name} href={item.href} className={item.className}>
                   {item.name}
                 </a>
               ))}
