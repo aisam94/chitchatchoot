@@ -5,6 +5,8 @@ import type { AppProps } from "next/app";
 import Loading from "../components/Loading";
 import Login from "./login";
 import Register from "./register";
+import About from "./about";
+import Settings from "./settings";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
 
@@ -44,9 +46,14 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         ) : router.pathname === "/register" ? (
           <Register />
+        ) : router.pathname === "/about" ? (
+          <About />
+        ) : router.pathname === "/settings" ? (
+          <Settings />
         ) : (
           <Login />
         )}
+        {/* {user ? <Component {...pageProps} /> : { showRegisterOrLogin }} */}
       </div>
     </>
   );

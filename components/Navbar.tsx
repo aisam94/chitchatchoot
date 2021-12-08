@@ -13,9 +13,11 @@ import { useRouter } from "next/router";
 
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navbar = () => {
   const router = useRouter();
+  const [user, loading] = useAuthState(auth);
 
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
@@ -32,36 +34,69 @@ const Navbar = () => {
   }
 
   //groups and message is disabled for now
-  const main_navigation = [
-    {
-      name: "Home",
-      href: "/",
-      className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
-    },
-    { name: "Groups", href: "#", className: "p-2 rounded-md text-gray-500" },
-    { name: "Message", href: "#", className: "p-2 rounded-md text-gray-500" },
-    {
-      name: "About",
-      href: "/about",
-      className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
-    },
-  ];
+  const main_navigation = user
+    ? [
+        {
+          name: "Home",
+          href: "/",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+        {
+          name: "Groups",
+          href: "#",
+          className: "p-2 rounded-md text-gray-500",
+        },
+        {
+          name: "Message",
+          href: "#",
+          className: "p-2 rounded-md text-gray-500",
+        },
+        {
+          name: "About",
+          href: "/about",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+      ]
+    : [
+        {
+          name: "Login",
+          href: "/login",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+        {
+          name: "Register",
+          href: "/register",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+        {
+          name: "About",
+          href: "/about",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+      ];
 
-  const profile_navigation = [
-    { name: "Profile", href: "/" },
-    {
-      name: "Settings",
-      href: "/settings",
-    },
-    {
-      name: "Log out",
-      href: "",
-      onclick() {
-        router.push("/");
-        signOut(auth);
-      },
-    },
-  ];
+  const profile_navigation = user
+    ? [
+        { name: "Profile", href: "/" },
+        {
+          name: "Settings",
+          href: "/settings",
+        },
+        {
+          name: "Log out",
+          href: "",
+          onclick() {
+            router.push("/");
+            signOut(auth);
+          },
+        },
+      ]
+    : [
+        {
+          name: "Settings",
+          href: "/settings",
+        },
+      ];
 
   return (
     <Disclosure as="nav" className="bg-gray-300">
