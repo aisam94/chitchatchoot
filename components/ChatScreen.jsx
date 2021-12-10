@@ -116,10 +116,10 @@ function ChatScreen({ chat }) {
     scrollToBottom();
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (event) => {
     // trigger when pressing enter
-    if (e.key === "Enter") {
-      sendMessage(e);
+    if (event.key === "Enter") {
+      sendMessage(event);
     }
   };
 
@@ -174,8 +174,6 @@ function ChatScreen({ chat }) {
           <MoreVertIcon className="cursor-pointer hover:text-gray-500" />
         </div>
       </div>
-      {/**/}
-      {/**/}
 
       {/*MESSAGE TEXT CONTAINER*/}
       {/* {scrollToBottom()} */}
@@ -209,8 +207,6 @@ function ChatScreen({ chat }) {
           onClick={(e) => sendMessage(e)}
           className="p-3 py-2 m-2 text-black bg-gray-200 rounded-lg hover:bg-gray-500"
         />
-        {/**/}
-        {/**/}
       </div>
     </div>
   );

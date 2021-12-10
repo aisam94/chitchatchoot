@@ -19,8 +19,8 @@ const Register: NextPage = () => {
       });
   };
 
-  const submit = (e: any) => {
-    e.preventDefault();
+  const submit = (event: any) => {
+    event.preventDefault();
     if (password !== confirmPassword) {
       // passwords not matching
       console.log("password not matching");
@@ -39,8 +39,8 @@ const Register: NextPage = () => {
 
   const { name, email, password, confirmPassword } = formData;
 
-  const change = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const change = (event: any) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   return (

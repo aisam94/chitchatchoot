@@ -19,12 +19,12 @@ const Login: NextPage = () => {
 
   const { email, password } = formData;
 
-  const change = (e: any) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const change = (event: any) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const submit = (e: any) => {
-    e.preventDefault();
+  const submit = (event: any) => {
+    event.preventDefault();
     signIn(email, password);
     router.push("/");
   };
@@ -49,7 +49,10 @@ const Login: NextPage = () => {
       </Head>
       <main className="flex flex-col items-center space-y-5 pt-4">
         <h1 className="text-xl font-bold">Sign in to your account</h1>
-        <form className="flex flex-col space-y-4" onSubmit={(e) => submit(e)}>
+        <form
+          className="flex flex-col space-y-4"
+          onSubmit={(event) => submit(event)}
+        >
           {/*Input Form*/}
           <div className="flex flex-col shadow-md rounded-md">
             {/*Email*/}
@@ -59,7 +62,7 @@ const Login: NextPage = () => {
               name="email"
               value={email}
               className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
-              onChange={(e) => change(e)}
+              onChange={(event) => change(event)}
               required
             />
             {/*Password*/}
@@ -69,7 +72,7 @@ const Login: NextPage = () => {
               name="password"
               value={password}
               className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
-              onChange={(e) => change(e)}
+              onChange={(event) => change(event)}
               required
             />
           </div>

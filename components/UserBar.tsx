@@ -56,7 +56,6 @@ export const UserBar: React.FC<{}> = () => {
     ) {
       //add chats to db chats collection
       setDoc(doc(chatCollection), { users: [user?.email, input] });
-      // setDoc(doc(chatCollection, input), { users: [user?.email, input] }); // this one set recipient email as doc name
     }
   };
 

@@ -53,7 +53,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         ) : (
           <Login />
         )}
-        {/* {user ? <Component {...pageProps} /> : { showRegisterOrLogin }} */}
       </div>
     </>
   );

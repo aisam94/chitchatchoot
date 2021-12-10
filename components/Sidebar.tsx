@@ -10,7 +10,6 @@ const Sidebar = () => {
 
   //create snapshot of doc of chat that has user email
   const chatCollection = collection(db, "chats");
-  //this give error when logging out
   const queryChat = user
     ? query(chatCollection, where("users", "array-contains", user?.email))
     : undefined;
@@ -26,9 +25,6 @@ const Sidebar = () => {
           <ChatList key={chat.id} id={chat.id} users={chat.data().users} />
         );
       })}
-      {/**/}
-      {/**/}
-      {/**/}
     </div>
   );
 };

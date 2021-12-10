@@ -116,7 +116,7 @@ const Settings: NextPage = () => {
             {/*log out*/}
             <div
               className="flex space-x-2 hover:bg-gray-200"
-              onClick={(e) => handleClick(e)}
+              onClick={(event) => handleClick(event)}
             >
               <LogoutIcon className="h-6 w-6 transform rotate-180" />
               <label className="select-none settings-text-width cursor-pointer">

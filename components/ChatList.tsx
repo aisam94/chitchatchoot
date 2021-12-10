@@ -25,14 +25,15 @@ const ChatList = ({ id, users }: Props) => {
 
   const recipientEmail = getRecipientEmail(users, user);
 
-  const enterChat = () => {
+  const enterChat = (event: any) => {
+    event.preventDefault();
     router.push(`/chat/${id}`);
   };
 
   return (
     <div
       className="flex items-center cursor-pointer break-words my-2 p-1 hover:bg-blue-200"
-      onClick={enterChat}
+      onClick={(event) => enterChat(event)}
     >
       {/*Recipient circle logo*/}
       {recipient && recipient?.photoURL !== null ? (
@@ -49,10 +50,6 @@ const ChatList = ({ id, users }: Props) => {
       {/*Last update date*/}
       {/*Text snippets*/}
       {/*Circle unread messages*/}
-      {/**/}
-      {/**/}
-      {/**/}
-      {/**/}
     </div>
   );
 };

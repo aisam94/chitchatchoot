@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import {
-  BellIcon,
   UserCircleIcon,
   SearchIcon,
   XIcon,
@@ -17,17 +16,18 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navbar = () => {
   const router = useRouter();
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
   }
 
+  //this is problematic and showing error
   function MyLink(props: any) {
     let { href, children, ...rest } = props;
 
     return (
-      <Link href={href}>
+      <Link href={href} passHref>
         <a {...rest}>{children}</a>
       </Link>
     );
@@ -85,7 +85,9 @@ const Navbar = () => {
         {
           name: "Log out",
           href: "",
-          onclick() {
+          onclick(event: any) {
+            //why does this work???
+            event.preventDefault();
             router.push("/");
             signOut(auth);
           },
@@ -145,11 +147,6 @@ const Navbar = () => {
                 </button>{" "}
               </div>
               <div className="flex mr-3 space-x-2">
-                {/*Notification alert bell icon*/}
-                {/* <BellIcon */}
-                {/*   className="w-8 h-8 p-1 hover:text-gray-500 cursor-pointer" */}
-                {/*   aria-hidden="true" */}
-                {/* /> */}
                 {/*Menu popup*/}
                 <Menu as="div">
                   <div>
@@ -215,7 +212,6 @@ const Navbar = () => {
                 placeholder="Search ..."
               />
               {/*Search icon*/}
-              {/*need to fix search icon css styling*/}
               <button
                 type="submit"
                 className="relative mt-3 mr-3 right-7 top-1"
