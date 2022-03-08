@@ -11,8 +11,10 @@ import {
 } from "@heroicons/react/outline";
 
 import { useRouter } from "next/router";
-import { signOut } from "firebase/auth";
+import { signOut, deleteUser } from "firebase/auth";
 import { auth } from "../firebase";
+
+const user = auth.currentUser; //for account deletion
 
 const Settings: NextPage = () => {
   const router = useRouter();
@@ -22,6 +24,17 @@ const Settings: NextPage = () => {
     event.stopPropagation();
     router.push("/");
     signOut(auth);
+  };
+
+  const deleteAccount = () => {
+    deleteUser(user)
+      .then(() => {
+        // User deleted.
+      })
+      .catch((error) => {
+        // An error ocurred
+        // ...
+      });
   };
 
   return (
@@ -107,7 +120,10 @@ const Settings: NextPage = () => {
               <ChevronRightIcon className="h-6 w-6" />
             </div>
             {/*delete account*/}
-            <div className="flex space-x-2 hover:bg-gray-200">
+            <div
+              onClick={deleteAccount}
+              className="flex space-x-2 hover:bg-gray-200"
+            >
               <TrashIcon className="h-6 w-6" />
               <label className="select-none settings-text-width cursor-pointer">
                 Delete account
