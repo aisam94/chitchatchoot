@@ -24,7 +24,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
-function ChatScreen({ chat }) {
+const ChatScreen = ({ chat }) => {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
   const router = useRouter();
@@ -51,7 +51,7 @@ function ChatScreen({ chat }) {
   //map through message and create individual message box
   const showMessages = () => {
     return (
-      <div>
+      <>
         {/* this one uses server side render */}
         {/* {messagesSnapshot */}
         {/*   ? messagesSnapshot.docs.map((chat) => { */}
@@ -91,7 +91,7 @@ function ChatScreen({ chat }) {
           })}
         {/* End of message screen marker div */}
         <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
-      </div>
+      </>
     );
   };
 
@@ -126,12 +126,12 @@ function ChatScreen({ chat }) {
   const showLastSeen = () => {
     if (recipientLastSeen !== undefined) {
       return (
-        <p>
+        <>
           {/* last seen info */}
           Last active:
           <TimeAgo datetime={recipientLastSeen} />
           {/* <TimeAgo datetime={"2021-11-04 19:06:08"} /> */}
-        </p>
+        </>
       );
     } else {
       return <p> Not active yet </p>;
@@ -204,12 +204,12 @@ function ChatScreen({ chat }) {
           type="submit"
           value="Send"
           disabled={!input}
-          onClick={(e) => sendMessage(e)}
+          onClick={sendMessage}
           className="p-3 py-2 m-2 text-black bg-gray-200 rounded-lg hover:bg-gray-500"
         />
       </div>
     </div>
   );
-}
+};
 
 export default ChatScreen;

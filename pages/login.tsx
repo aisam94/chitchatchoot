@@ -41,7 +41,7 @@ const Login: NextPage = () => {
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>Login user</title>
         <meta name="description" content="login" />
@@ -115,7 +115,7 @@ const Login: NextPage = () => {
           </Link>
         </div>
       </main>
-    </div>
+    </>
   );
 };
 

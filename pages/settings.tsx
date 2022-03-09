@@ -14,7 +14,7 @@ import { useRouter } from "next/router";
 import { signOut, deleteUser } from "firebase/auth";
 import { auth } from "../firebase";
 
-const user = auth.currentUser; //for account deletion
+const user: any = auth.currentUser; //for account deletion
 
 const Settings: NextPage = () => {
   const router = useRouter();
@@ -38,7 +38,7 @@ const Settings: NextPage = () => {
   };
 
   return (
-    <div>
+    <>
       <main>
         <div className="flex flex-col items-center space-y-5 pt-4">
           <div>
@@ -142,7 +142,7 @@ const Settings: NextPage = () => {
           </div>
         </div>
       </main>
-    </div>
+    </>
   );
 };
 

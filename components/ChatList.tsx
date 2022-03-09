@@ -11,7 +11,7 @@ type Props = {
   users?: any;
 };
 
-const ChatList = ({ id, users }: Props) => {
+const ChatList = ({ id, users }: Props): JSX.Element => {
   const [user] = useAuthState(auth);
   const router = useRouter();
 

@@ -44,7 +44,7 @@ const Register: NextPage = () => {
   };
 
   return (
-    <div>
+    <>
       <Head>
         <title>Register user</title>
         <meta name="description" content="register" />
@@ -107,7 +107,7 @@ const Register: NextPage = () => {
           </a>
         </Link>
       </main>
-    </div>
+    </>
   );
 };
 
