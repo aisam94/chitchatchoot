@@ -73,6 +73,11 @@ const Navbar = () => {
           href: "/about",
           className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
         },
+        {
+          name: "Demo",
+          href: "/demo",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
       ];
 
   const profile_navigation = user

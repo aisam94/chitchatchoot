@@ -6,6 +6,7 @@ import Loading from "../components/Loading";
 import Login from "./login";
 import Register from "./register";
 import About from "./about";
+import Demo from "./demo";
 import Settings from "./settings";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
@@ -50,6 +51,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <About />
         ) : router.pathname === "/settings" ? (
           <Settings />
+        ) : router.pathname === "/demo" ? (
+          <Demo />
         ) : (
           <Login />
         )}

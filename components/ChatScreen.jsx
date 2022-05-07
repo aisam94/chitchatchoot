@@ -51,7 +51,7 @@ const ChatScreen = ({ chat }) => {
   //map through message and create individual message box
   const showMessages = () => {
     return (
-      <>
+      <div>
         {/* this one uses server side render */}
         {/* {messagesSnapshot */}
         {/*   ? messagesSnapshot.docs.map((chat) => { */}
@@ -91,7 +91,7 @@ const ChatScreen = ({ chat }) => {
           })}
         {/* End of message screen marker div */}
         <div className="mb-12 clear-both " ref={endOfMessageRef}></div>
-      </>
+      </div>
     );
   };
 
@@ -177,7 +177,7 @@ const ChatScreen = ({ chat }) => {
 
       {/*MESSAGE TEXT CONTAINER*/}
       {/* {scrollToBottom()} */}
-      <div className="p-10 overflow-y-auto bg-gray-300 chat-container-height flex flex-col-reverse border-2">
+      <div className="flex flex-col-reverse p-10 overflow-y-auto bg-gray-300 border-2 chat-container-height">
         {showMessages()}
       </div>
 

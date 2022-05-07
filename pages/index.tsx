@@ -4,18 +4,18 @@ import Sidebar from "../components/Sidebar";
 
 const Home: NextPage = () => {
   return (
-    <div className="h-full overflow-hidden flex">
+    <div className="flex h-full overflow-hidden">
       <Head>
         <title>ChitChatChoot</title>
         <meta name="description" content="Chitty chitty bang bang" />
         <link rel="icon" href="" />
       </Head>
 
-      <main className="h-full w-full flex">
-        <div className="w-full sm:w-1/4 h-full flex">
+      <main className="flex w-full h-full">
+        <div className="flex w-full h-full sm:w-1/4">
           <Sidebar />
         </div>
-        <div className="w-full hidden sm:flex sm:w-3/4 bg-gray-200 items-center justify-center text-xl font-bold">
+        <div className="items-center justify-center hidden w-full text-xl font-bold bg-gray-200 sm:flex sm:w-3/4">
           No chat is selected
         </div>
       </main>

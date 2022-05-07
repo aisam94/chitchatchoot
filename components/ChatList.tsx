@@ -32,10 +32,10 @@ const ChatList = ({ id, users }: Props): JSX.Element => {
 
   return (
     <div
-      className="flex items-center cursor-pointer break-words my-2 p-1 hover:bg-blue-200"
+      className="flex items-center p-1 my-2 break-words cursor-pointer hover:bg-blue-200"
       onClick={(event) => enterChat(event)}
     >
-      {/*Recipient circle logo*/}
+      {/* Recipient circle logo */}
       {recipient && recipient?.photoURL !== null ? (
         <Avatar
           alt=""

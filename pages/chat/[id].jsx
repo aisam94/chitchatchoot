@@ -26,14 +26,14 @@ function Chat() {
   const chatData = chatSnapshot?.data();
 
   return (
-    <div className="h-full flex">
+    <div className="flex h-full">
       <Head>
         {chatData && (
           <title>Chat with {getRecipientEmail(chatData.users, user)}</title>
         )}
       </Head>
       {/*sidebar*/}
-      <div className="hidden sm:flex sm:w-1/4 h-full">
+      <div className="hidden h-full sm:flex sm:w-1/4">
         <Sidebar />
       </div>
       {/*chat container*/}
