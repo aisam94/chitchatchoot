@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { auth, db } from "../firebase";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import {
@@ -24,24 +24,31 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
-function ChatScreen({ chat }) {
+import { DocumentData } from "@firebase/firestore";
+
+interface ChatScreenArg {
+  chat: DocumentData | undefined;
+}
+
+function ChatScreen({ chat }: ChatScreenArg) {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
-  const router = useRouter();
-  const endOfMessageRef = useRef(null);
+  const router: NextRouter = useRouter();
+  console.log(router.query);
+  const routerId = router.query.id as string;
+  const endOfMessageRef = useRef<HTMLDivElement>(null);
 
-  const chatRef = doc(db, "chats", router.query.id);
+  const chatRef = doc(db, "chats", routerId);
   const messageRef = collection(chatRef, "messages");
   const messageQuery = query(messageRef, orderBy("timestamp", "asc"));
   const [messagesSnapshot] = useCollection(messageQuery);
 
-  const recipientEmail = getRecipientEmail(chat.users, user);
+  // const recipientEmail = chat ? getRecipientEmail(chat.users, user) : "";
+  const recipientEmail = getRecipientEmail(chat?.users, user);
 
   const userRef = collection(db, "users");
-  const userQuery = query(
-    userRef,
-    where("email", "==", getRecipientEmail(chat.users, user))
-  );
+  const userEmail = chat ? getRecipientEmail(chat.users, user) : "";
+  const userQuery = query(userRef, where("email", "==", userEmail));
   const [recipientSnapshot] = useCollection(userQuery);
   const recipientLastSeen = recipientSnapshot?.docs?.[0]
     ?.data()
@@ -95,28 +102,30 @@ function ChatScreen({ chat }) {
     );
   };
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    setDoc(
-      doc(db, "users", user.uid),
-      {
-        lastSeen: serverTimestamp(),
-      },
-      { merge: true }
-    );
+  const sendMessage = (event: any) => {
+    event.preventDefault();
+    if (user) {
+      setDoc(
+        doc(db, "users", user.uid),
+        {
+          lastSeen: serverTimestamp(),
+        },
+        { merge: true }
+      );
+    }
 
-    addDoc(collection(doc(db, "chats", router.query.id), "messages"), {
+    addDoc(collection(doc(db, "chats", routerId), "messages"), {
       timestamp: serverTimestamp(),
       message: input,
-      user: user.email,
-      photoURL: user.photoURL,
+      user: user?.email,
+      photoURL: user?.photoURL,
     });
 
     setInput("");
     scrollToBottom();
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event: any) => {
     // trigger when pressing enter
     if (event.key === "Enter") {
       sendMessage(event);
@@ -139,10 +148,12 @@ function ChatScreen({ chat }) {
   };
 
   const scrollToBottom = () => {
-    endOfMessageRef.current.scrollIntoView({
-      behavior: "auto",
-      block: "start",
-    });
+    if (endOfMessageRef.current !== null) {
+      endOfMessageRef!.current!.scrollIntoView({
+        behavior: "auto",
+        block: "start",
+      });
+    }
   };
 
   return (
@@ -177,7 +188,7 @@ function ChatScreen({ chat }) {
 
       {/*MESSAGE TEXT CONTAINER*/}
       {/* {scrollToBottom()} */}
-      <div className="p-10 overflow-y-auto bg-gray-300 chat-container-height flex flex-col-reverse border-2">
+      <div className="flex flex-col-reverse p-10 overflow-y-auto bg-gray-300 border-2 chat-container-height">
         {showMessages()}
       </div>
 

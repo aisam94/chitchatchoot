@@ -4,10 +4,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { auth, provider } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 
 const Login: NextPage = () => {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).catch(alert);
   };
@@ -47,7 +47,7 @@ const Login: NextPage = () => {
         <meta name="description" content="login" />
         <link rel="icon" href="" />
       </Head>
-      <main className="flex flex-col items-center space-y-5 pt-4">
+      <main className="flex flex-col items-center pt-4 space-y-5">
         <h1 className="text-xl font-bold">Sign in to your account</h1>
         <form
           className="flex flex-col space-y-4"
@@ -90,7 +90,7 @@ const Login: NextPage = () => {
               type="checkbox"
               className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
             />
-            <label htmlFor="remember-me" className="ml-2 block text-gray-900">
+            <label htmlFor="remember-me" className="block ml-2 text-gray-900">
               Remember me
             </label>
           </div>

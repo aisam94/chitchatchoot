@@ -8,6 +8,7 @@ import { doc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";
+import { DocumentData } from "@firebase/firestore";
 
 // import {
 //   collection,
@@ -20,20 +21,21 @@ import Sidebar from "../../components/Sidebar";
 function Chat() {
   const [user] = useAuthState(auth);
   const router = useRouter();
+  const routerId = router.query.id as string;
 
-  const chatRef = doc(db, "chats", router.query.id);
+  const chatRef = doc(db, "chats", routerId);
   const [chatSnapshot] = useDocument(chatRef);
-  const chatData = chatSnapshot?.data();
+  const chatData: DocumentData | undefined = chatSnapshot?.data();
 
   return (
-    <div className="h-full flex">
+    <div className="flex h-full">
       <Head>
         {chatData && (
           <title>Chat with {getRecipientEmail(chatData.users, user)}</title>
         )}
       </Head>
       {/*sidebar*/}
-      <div className="hidden sm:flex sm:w-1/4 h-full">
+      <div className="hidden h-full sm:flex sm:w-1/4">
         <Sidebar />
       </div>
       {/*chat container*/}

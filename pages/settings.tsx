@@ -10,14 +10,14 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/outline";
 
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { signOut, deleteUser } from "firebase/auth";
 import { auth } from "../firebase";
 
 const user = auth.currentUser; //for account deletion
 
 const Settings: NextPage = () => {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     //this stop from registering normal click to trigger this, maybe error due to typescript
@@ -27,30 +27,32 @@ const Settings: NextPage = () => {
   };
 
   const deleteAccount = () => {
-    deleteUser(user)
-      .then(() => {
-        // User deleted.
-      })
-      .catch((error) => {
-        // An error ocurred
-        // ...
-      });
+    if (user != null) {
+      deleteUser(user)
+        .then(() => {
+          // User deleted.
+        })
+        .catch((error) => {
+          // An error ocurred
+          console.log(error);
+        });
+    }
   };
 
   return (
     <div>
       <main>
-        <div className="flex flex-col items-center space-y-5 pt-4">
+        <div className="flex flex-col items-center pt-4 space-y-5">
           <div>
-            <h1 className="font-bold text-xl">Settings</h1>
+            <h1 className="text-xl font-bold">Settings</h1>
           </div>
           <div className="space-y-2">
             {/*enable dark theme*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <MoonIcon className="h-6 w-6" />
+              <MoonIcon className="w-6 h-6" />
               <label
                 htmlFor="dark-toggle"
-                className="select-none settings-text-width cursor-pointer"
+                className="cursor-pointer select-none settings-text-width"
               >
                 Dark Theme
               </label>
@@ -59,20 +61,20 @@ const Settings: NextPage = () => {
                   type="checkbox"
                   name="dark-toggle"
                   id="dark-toggle"
-                  className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 border-gray-300 appearance-none cursor-pointer"
+                  className="absolute block w-6 h-6 bg-white border-2 border-gray-300 rounded-full appearance-none cursor-pointer toggle-checkbox"
                 />
                 <label
                   htmlFor="dark-toggle"
-                  className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
+                  className="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer toggle-label"
                 ></label>
               </div>
             </div>
             {/*show online status*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <CheckCircleIcon className="h-6 w-6" />
+              <CheckCircleIcon className="w-6 h-6" />
               <label
                 htmlFor="online-status-toggle"
-                className="select-none settings-text-width cursor-pointer"
+                className="cursor-pointer select-none settings-text-width"
               >
                 Show online status
               </label>
@@ -91,10 +93,10 @@ const Settings: NextPage = () => {
             </div>
             {/*enable sound notification*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <VolumeUpIcon className="h-6 w-6" />
+              <VolumeUpIcon className="w-6 h-6" />
               <label
                 htmlFor="sound-bell-toggle"
-                className="select-none settings-text-width cursor-pointer"
+                className="cursor-pointer select-none settings-text-width"
               >
                 Enable sound bell notification
               </label>
@@ -103,29 +105,29 @@ const Settings: NextPage = () => {
                   type="checkbox"
                   name="sound-bell-toggle"
                   id="sound-bell-toggle"
-                  className="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 border-gray-300 appearance-none cursor-pointer"
+                  className="absolute block w-6 h-6 bg-white border-2 border-gray-300 rounded-full appearance-none cursor-pointer toggle-checkbox"
                 />
                 <label
                   htmlFor="sound-bell-toggle"
-                  className="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"
+                  className="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer toggle-label"
                 ></label>
               </div>
             </div>
             {/*change text font*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <DocumentTextIcon className="h-6 w-6" />
-              <label className="select-none settings-text-width cursor-pointer">
+              <DocumentTextIcon className="w-6 h-6" />
+              <label className="cursor-pointer select-none settings-text-width">
                 Change text font
               </label>
-              <ChevronRightIcon className="h-6 w-6" />
+              <ChevronRightIcon className="w-6 h-6" />
             </div>
             {/*delete account*/}
             <div
               onClick={deleteAccount}
               className="flex space-x-2 hover:bg-gray-200"
             >
-              <TrashIcon className="h-6 w-6" />
-              <label className="select-none settings-text-width cursor-pointer">
+              <TrashIcon className="w-6 h-6" />
+              <label className="cursor-pointer select-none settings-text-width">
                 Delete account
               </label>
             </div>
@@ -134,8 +136,8 @@ const Settings: NextPage = () => {
               className="flex space-x-2 hover:bg-gray-200"
               onClick={(event) => handleClick(event)}
             >
-              <LogoutIcon className="h-6 w-6 transform rotate-180" />
-              <label className="select-none settings-text-width cursor-pointer">
+              <LogoutIcon className="w-6 h-6 transform rotate-180" />
+              <label className="cursor-pointer select-none settings-text-width">
                 Log out of account
               </label>
             </div>

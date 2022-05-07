@@ -8,21 +8,26 @@ import Register from "./register";
 import About from "./about";
 import Settings from "./settings";
 import Navbar from "../components/Navbar";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { DocumentData, DocumentReference } from "@firebase/firestore";
 
 function MyApp({ Component, pageProps }: AppProps) {
   //get user status from firebase modules
   const [user, loading] = useAuthState(auth);
-  const router = useRouter();
+  const router: NextRouter = useRouter();
 
   useEffect(() => {
     if (user) {
       //references users db using users uid
-      const docRef = doc(db, "users", user.uid);
+      const docRef: DocumentReference<DocumentData> = doc(
+        db,
+        "users",
+        user.uid
+      );
       //create or overwrite data from user
       setDoc(
         docRef,
