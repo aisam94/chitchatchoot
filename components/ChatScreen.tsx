@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, MouseEvent, KeyboardEvent } from "react";
 import { auth, db } from "../firebase";
 import { NextRouter, useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -34,7 +34,6 @@ function ChatScreen({ chat }: ChatScreenArg) {
   const [user] = useAuthState(auth);
   const [input, setInput] = useState("");
   const router: NextRouter = useRouter();
-  console.log(router.query);
   const routerId = router.query.id as string;
   const endOfMessageRef = useRef<HTMLDivElement>(null);
 
@@ -44,10 +43,10 @@ function ChatScreen({ chat }: ChatScreenArg) {
   const [messagesSnapshot] = useCollection(messageQuery);
 
   // const recipientEmail = chat ? getRecipientEmail(chat.users, user) : "";
-  const recipientEmail = getRecipientEmail(chat?.users, user);
+  const recipientEmail: string = getRecipientEmail(chat?.users, user);
 
   const userRef = collection(db, "users");
-  const userEmail = chat ? getRecipientEmail(chat.users, user) : "";
+  const userEmail: string = getRecipientEmail(chat?.users, user);
   const userQuery = query(userRef, where("email", "==", userEmail));
   const [recipientSnapshot] = useCollection(userQuery);
   const recipientLastSeen = recipientSnapshot?.docs?.[0]
@@ -102,8 +101,7 @@ function ChatScreen({ chat }: ChatScreenArg) {
     );
   };
 
-  const sendMessage = (event: any) => {
-    event.preventDefault();
+  const sendMessage = (): void => {
     if (user) {
       setDoc(
         doc(db, "users", user.uid),
@@ -125,10 +123,15 @@ function ChatScreen({ chat }: ChatScreenArg) {
     scrollToBottom();
   };
 
-  const handleKeyPress = (event: any) => {
+  const clickHandler = (event: MouseEvent) => {
+    event.preventDefault();
+    sendMessage();
+  };
+
+  const handleKeyPress = (event: KeyboardEvent) => {
     // trigger when pressing enter
     if (event.key === "Enter") {
-      sendMessage(event);
+      sendMessage();
     }
   };
 
@@ -215,7 +218,7 @@ function ChatScreen({ chat }: ChatScreenArg) {
           type="submit"
           value="Send"
           disabled={!input}
-          onClick={(e) => sendMessage(e)}
+          onClick={(e) => clickHandler(e)}
           className="p-3 py-2 m-2 text-black bg-gray-200 rounded-lg hover:bg-gray-500"
         />
       </div>

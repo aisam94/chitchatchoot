@@ -1,3 +1,4 @@
+import React, { MouseEvent } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { auth, db } from "../firebase";
@@ -7,8 +8,8 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import { Avatar } from "@mui/material";
 
 type Props = {
-  id?: string;
-  users?: any;
+  id: string;
+  users: string[];
 };
 
 const ChatList = ({ id, users }: Props) => {
@@ -25,14 +26,14 @@ const ChatList = ({ id, users }: Props) => {
 
   const recipientEmail = getRecipientEmail(users, user);
 
-  const enterChat = (event: any) => {
+  const enterChat = (event: MouseEvent) => {
     event.preventDefault();
     router.push(`/chat/${id}`);
   };
 
   return (
     <div
-      className="flex items-center cursor-pointer break-words my-2 p-1 hover:bg-blue-200"
+      className="flex items-center p-1 my-2 break-words cursor-pointer hover:bg-blue-200"
       onClick={(event) => enterChat(event)}
     >
       {/*Recipient circle logo*/}

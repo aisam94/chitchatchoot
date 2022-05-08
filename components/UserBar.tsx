@@ -16,9 +16,9 @@ export const UserBar: React.FC<{}> = () => {
     : undefined;
   const [chatSnapshot] = useCollection(userChatQuery);
 
-  const chatAlreadyExist = (recipientEmail: any) => {
+  const chatAlreadyExist = (recipientEmail: string) => {
     // !!chatSnapshot?.docs.find((chat) => {
-    //   chat.data().users.find((user: any) => user === recipientEmail)?.length >
+    //   chat.data().users.find((user: string) => user === recipientEmail)?.length >
     //     0;
     // });
     //
@@ -27,7 +27,7 @@ export const UserBar: React.FC<{}> = () => {
       for (let i = 0; i < chatSnapshot?.docs.length; i++) {
         const found = chatSnapshot?.docs[i]
           .data()
-          .users.find((user: any) => user === recipientEmail);
+          .users.find((user: string) => user === recipientEmail);
         if (found) {
           return true;
         }
@@ -74,7 +74,7 @@ export const UserBar: React.FC<{}> = () => {
         </Avatar>
       )}
       {/*User name/email*/}
-      <p className="text-sm break-words userbar-name-width font-semibold">
+      <p className="text-sm font-semibold break-words userbar-name-width">
         {user?.email}
       </p>
       {/* Clickable icons */}

@@ -23,7 +23,7 @@ const Navbar = () => {
   }
 
   //this is problematic and showing error
-  function MyLink(props: any) {
+  function MyLink(props: unknown) {
     let { href, children, ...rest } = props;
 
     return (

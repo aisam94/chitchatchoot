@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import ChatList from "./ChatList";
 import { UserBar } from "./UserBar";
+import { QuerySnapshot } from "@firebase/firestore";
 
 const Sidebar = () => {
   const [user] = useAuthState(auth);
@@ -16,7 +17,7 @@ const Sidebar = () => {
   const [chatSnapshot] = useCollection(queryChat);
 
   return (
-    <div className="bg-gray-100 sm:block break-words overflow-y-auto w-full">
+    <div className="w-full overflow-y-auto break-words bg-gray-100 sm:block">
       <UserBar />
 
       {/*Chat List*/}

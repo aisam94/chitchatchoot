@@ -2,10 +2,10 @@ import React from "react";
 import dayjs from "dayjs";
 
 type Props = {
-  user: any;
-  message: any;
-  timestamp: any;
-  recipient: any;
+  user: string;
+  message: string;
+  timestamp: string;
+  recipient: string;
 };
 
 const Message = ({ user, message, timestamp, recipient }: Props) => {
@@ -13,16 +13,16 @@ const Message = ({ user, message, timestamp, recipient }: Props) => {
 
   if (recipient !== user) {
     return (
-      <div className="bg-white m-3 p-3 w-1/2 rounded-xl float-left clear-left break-words">
+      <div className="float-left w-1/2 p-3 m-3 break-words bg-white rounded-xl clear-left">
         <p>{message}</p>
-        <p className="text-gray-400 float-right">{timeformatted}</p>
+        <p className="float-right text-gray-400">{timeformatted}</p>
       </div>
     );
   } else {
     return (
-      <div className="bg-blue-100 m-3 p-3 w-1/2 rounded-xl float-right clear-right ">
+      <div className="float-right w-1/2 p-3 m-3 bg-blue-100 rounded-xl clear-right ">
         <p>{message}</p>
-        <p className="text-gray-400 float-right">{timeformatted}</p>
+        <p className="float-right text-gray-400">{timeformatted}</p>
       </div>
     );
   }

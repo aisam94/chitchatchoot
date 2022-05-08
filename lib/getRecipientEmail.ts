@@ -1,7 +1,18 @@
-//this is only for 1 to 1 chat as only filter one user from array
-const getRecipientEmail = (users: any, usersLoggedIn: any) => {
+import { User } from "@firebase/auth";
+
+const getRecipientEmail = (
+  users: string[],
+  usersLoggedIn: User | null | undefined
+): string => {
+  //this is only for 1 to 1 chat as only filter one user from array
+  //maybe there is a better way to extract email
+
+  if (!usersLoggedIn) {
+    return "";
+  }
+
   const result = users?.filter(
-    (userToFilter: any) => userToFilter !== usersLoggedIn?.email
+    (userToFilter: string) => userToFilter !== usersLoggedIn?.email
   )[0];
 
   return result;

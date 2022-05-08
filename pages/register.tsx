@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const Register: NextPage = () => {
       });
   };
 
-  const submit = (event: any) => {
+  const submit = (event: FormEvent) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       // passwords not matching
@@ -39,7 +39,7 @@ const Register: NextPage = () => {
 
   const { name, email, password, confirmPassword } = formData;
 
-  const change = (event: any) => {
+  const change = (event: { target: HTMLInputElement }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -50,17 +50,17 @@ const Register: NextPage = () => {
         <meta name="description" content="register" />
         <link rel="icon" href="" />
       </Head>
-      <main className="flex flex-col items-center space-y-5 pt-4">
-        <h1 className="font-bold text-xl">Register your account</h1>
+      <main className="flex flex-col items-center pt-4 space-y-5">
+        <h1 className="text-xl font-bold">Register your account</h1>
         <form className="flex flex-col space-y-4" onSubmit={(e) => submit(e)}>
-          <div className="rounded-md shadow-md flex flex-col">
+          <div className="flex flex-col shadow-md rounded-md">
             {/*Username*/}
             <input
               type="text"
               placeholder="Name"
               name="name"
               value={name}
-              className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
               onChange={(e) => change(e)}
               required
             />
@@ -70,7 +70,7 @@ const Register: NextPage = () => {
               placeholder="Email address"
               name="email"
               value={email}
-              className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
               onChange={(e) => change(e)}
               required
             />
@@ -80,7 +80,7 @@ const Register: NextPage = () => {
               placeholder="Password"
               name="password"
               value={password}
-              className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
               onChange={(e) => change(e)}
               required
             />
@@ -90,13 +90,13 @@ const Register: NextPage = () => {
               placeholder="Reenter password"
               name="confirmPassword"
               value={confirmPassword}
-              className="appearance-none border border-gray-300 py-1 px-2 focus:outline-none focus:border-indigo-500"
+              className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
               onChange={(e) => change(e)}
               required
             />
           </div>
           <input
-            className="text-white rounded py-2 bg-gray-400 hover:bg-gray-500"
+            className="py-2 text-white bg-gray-400 rounded hover:bg-gray-500"
             type="submit"
             value="REGISTER"
           />

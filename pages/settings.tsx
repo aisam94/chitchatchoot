@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import type { NextPage } from "next";
 
 import {
@@ -19,7 +20,7 @@ const user = auth.currentUser; //for account deletion
 const Settings: NextPage = () => {
   const router: NextRouter = useRouter();
 
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = (event: MouseEvent) => {
     //this stop from registering normal click to trigger this, maybe error due to typescript
     event.stopPropagation();
     router.push("/");
