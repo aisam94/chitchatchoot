@@ -1,28 +1,34 @@
 import React from "react";
 import { DotsVerticalIcon, PlusIcon } from "@heroicons/react/outline";
 import { auth, db } from "../firebase";
-import { doc, setDoc, collection, query, where } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  query,
+  where,
+  DocumentData,
+  CollectionReference,
+  Query,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import * as EmailValidator from "email-validator";
 import { Avatar } from "@mui/material";
 
-export const UserBar: React.FC<{}> = () => {
+export const UserBar = (): JSX.Element => {
   const [user] = useAuthState(auth);
-  const chatCollection = collection(db, "chats");
+  const chatCollection: CollectionReference<DocumentData> = collection(
+    db,
+    "chats"
+  );
 
-  const userChatQuery = user
+  const userChatQuery: Query<DocumentData> | undefined = user
     ? query(chatCollection, where("users", "array-contains", user?.email))
     : undefined;
   const [chatSnapshot] = useCollection(userChatQuery);
 
-  const chatAlreadyExist = (recipientEmail: string) => {
-    // !!chatSnapshot?.docs.find((chat) => {
-    //   chat.data().users.find((user: string) => user === recipientEmail)?.length >
-    //     0;
-    // });
-    //
-    //this could be slow as it iterates whole list
+  const chatAlreadyExist = (recipientEmail: string): boolean | undefined => {
     if (chatSnapshot !== undefined) {
       for (let i = 0; i < chatSnapshot?.docs.length; i++) {
         const found = chatSnapshot?.docs[i]
@@ -34,21 +40,28 @@ export const UserBar: React.FC<{}> = () => {
       }
       return false;
     }
+    return undefined;
   };
 
   //find user photo url
-  const userCollection = collection(db, "users");
-  const queryUser = user
+  const userCollection: CollectionReference<DocumentData> = collection(
+    db,
+    "users"
+  );
+  const queryUser: Query<DocumentData> | undefined = user
     ? query(userCollection, where("email", "==", user?.email))
     : undefined;
   const [userSnapshot] = useCollection(queryUser);
-  const userPhotoUrl = userSnapshot?.docs?.[0].data().photoURL;
+  const userPhotoUrl: string = userSnapshot?.docs?.[0].data().photoURL;
   const userFirstLetter = user?.email !== null ? user?.email[0] : "";
 
   //create chat by entering recipient email via prompt
-  const createChat = () => {
+  const createChat = (): void => {
     const input = prompt("Enter email address for user to chat with");
-    if (!input) return null;
+    if (!input) {
+      // return null;
+      return;
+    }
     if (
       EmailValidator.validate(input) &&
       input !== user?.email &&

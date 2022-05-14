@@ -8,7 +8,12 @@ type Props = {
   recipient: string;
 };
 
-const Message = ({ user, message, timestamp, recipient }: Props) => {
+const Message = ({
+  user,
+  message,
+  timestamp,
+  recipient,
+}: Props): JSX.Element => {
   const timeformatted = dayjs(timestamp).format("h:mm A");
 
   if (recipient !== user) {

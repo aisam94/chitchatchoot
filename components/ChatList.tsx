@@ -1,9 +1,16 @@
 import React, { MouseEvent } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
+import { useRouter, NextRouter } from "next/router";
 import { auth, db } from "../firebase";
 import getRecipientEmail from "../lib/getRecipientEmail";
-import { collection, query, where } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  CollectionReference,
+  DocumentData,
+  Query,
+} from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { Avatar } from "@mui/material";
 
@@ -13,20 +20,23 @@ type Props = {
 };
 
 const ChatList = ({ id, users }: Props) => {
+  const router: NextRouter = useRouter();
   const [user] = useAuthState(auth);
-  const router = useRouter();
-
-  const userCollection = collection(db, "users");
-  const queryUser = query(
+  const userCollection: CollectionReference<DocumentData> = collection(
+    db,
+    "users"
+  );
+  const queryUser: Query<DocumentData> = query(
     userCollection,
     where("email", "==", getRecipientEmail(users, user))
   );
   const [recipientSnapshot] = useCollection(queryUser);
-  const recipient = recipientSnapshot?.docs?.[0]?.data();
+  const recipient: DocumentData | undefined =
+    recipientSnapshot?.docs?.[0]?.data();
 
-  const recipientEmail = getRecipientEmail(users, user);
+  const recipientEmail: string = getRecipientEmail(users, user);
 
-  const enterChat = (event: MouseEvent) => {
+  const enterChat = (event: MouseEvent): void => {
     event.preventDefault();
     router.push(`/chat/${id}`);
   };
@@ -48,9 +58,6 @@ const ChatList = ({ id, users }: Props) => {
       )}
       {/*Recipient email/ name*/}
       <p className="break-words chatlist-recipient-width ">{recipientEmail}</p>
-      {/*Last update date*/}
-      {/*Text snippets*/}
-      {/*Circle unread messages*/}
     </div>
   );
 };

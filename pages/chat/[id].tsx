@@ -4,26 +4,17 @@ import { auth, db } from "../../firebase";
 import getRecipientEmail from "../../lib/getRecipientEmail";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocument } from "react-firebase-hooks/firestore";
-import { doc } from "firebase/firestore";
-import { useRouter } from "next/router";
+import { doc, DocumentData, DocumentReference } from "firebase/firestore";
+import { useRouter, NextRouter } from "next/router";
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";
-import { DocumentData } from "@firebase/firestore";
-
-// import {
-//   collection,
-//   orderBy,
-//   query,
-//   getDocs,
-//   getDoc,
-// } from "firebase/firestore";
 
 function Chat() {
   const [user] = useAuthState(auth);
-  const router = useRouter();
-  const routerId = router.query.id as string;
+  const router: NextRouter = useRouter();
+  const routerId: string = router.query.id as string;
 
-  const chatRef = doc(db, "chats", routerId);
+  const chatRef: DocumentReference<DocumentData> = doc(db, "chats", routerId);
   const [chatSnapshot] = useDocument(chatRef);
   const chatData: DocumentData | undefined = chatSnapshot?.data();
 
@@ -45,38 +36,3 @@ function Chat() {
 }
 
 export default Chat;
-
-// Server side aspect for loading chat messages at each request
-//// export async function getServerSideProps(context) {
-//  const ref = doc(db, "chats", context.query.id);
-
-//  //prep message on the server, fetch all chat messages
-//  const messagecollection = collection(ref, "messages");
-//  const q = query(messagecollection, orderby("timestamp", "asc"));
-//  const messagesref = await getdocs(q);
-
-//  //populate the array with data from messages database and change timestamp with different format
-//  const messages = messagesref.docs
-//    .map((doc) => ({
-//      id: doc.id,
-//      ...doc.data(),
-//    }))
-//    .map((messages) => ({
-//      ...messages,
-//      timestamp: messages.timestamp.todate().gettime(),
-//    }));
-
-//  //prep the chats, fetch the chat document
-//  const chatref = await getdoc(ref);
-//  const chat = {
-//    id: chatref.id,
-//    ...chatref.data(),
-//  };
-
-//  return {
-//    props: {
-//      messages: JSON.stringify(messages),
-//      chat: chat,
-//    },
-//  };
-//};

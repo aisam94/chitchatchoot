@@ -15,7 +15,7 @@ import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { DocumentData, DocumentReference } from "@firebase/firestore";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   //get user status from firebase modules
   const [user, loading] = useAuthState(auth);
   const router: NextRouter = useRouter();
@@ -61,5 +61,5 @@ function MyApp({ Component, pageProps }: AppProps) {
       </div>
     </>
   );
-}
+};
 export default MyApp;

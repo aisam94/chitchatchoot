@@ -4,9 +4,6 @@ const getRecipientEmail = (
   users: string[],
   usersLoggedIn: User | null | undefined
 ): string => {
-  //this is only for 1 to 1 chat as only filter one user from array
-  //maybe there is a better way to extract email
-
   if (!usersLoggedIn) {
     return "";
   }

@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 
 const About: NextPage = () => {
   return (
-    <div>
+    <>
       <h1 className="mt-10 font-bold text-center">About the website</h1>
       <p className="w-full p-10 mx-auto mt-2 text-center text-gray-500 sm:w-1/2">
         This is a website that showcase a 1 on 1 chat function. Users can
@@ -13,7 +13,7 @@ const About: NextPage = () => {
         possible to accomodate different medium. Thank you for using this
         website.
       </p>
-    </div>
+    </>
   );
 };
 

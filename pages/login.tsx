@@ -12,17 +12,17 @@ const Login: NextPage = () => {
     signInWithPopup(auth, provider).catch(alert);
   };
 
-  const [formData, setFormData] = useState({
+  interface formDataProps {
+    email: string;
+    password: string;
+  }
+
+  const [formData, setFormData] = useState<formDataProps>({
     email: "",
     password: "",
   });
 
   const { email, password } = formData;
-
-  // const change = (event: FormEvent) => {
-  //   const eventTarget = event.target as HTMLInputElement;
-  //   setFormData({ ...formData, [eventTarget.name]: eventTarget.value });
-  // };
 
   const change = (event: { target: HTMLInputElement }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });

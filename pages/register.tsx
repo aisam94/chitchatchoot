@@ -4,11 +4,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../firebase";
-import { useRouter } from "next/router";
+import { useRouter, NextRouter } from "next/router";
 
 const Register: NextPage = () => {
-  const router = useRouter();
-  const createUser = (email: string, password: string) => {
+  const router: NextRouter = useRouter();
+
+  const createUser = (email: string, password: string): void => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -19,7 +20,7 @@ const Register: NextPage = () => {
       });
   };
 
-  const submit = (event: FormEvent) => {
+  const submit = (event: FormEvent): void => {
     event.preventDefault();
     if (password !== confirmPassword) {
       // passwords not matching
@@ -30,16 +31,23 @@ const Register: NextPage = () => {
     }
   };
 
-  const [formData, setFormData] = useState({
+  interface formDataProps {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }
+
+  const [formData, setFormData] = useState<formDataProps>({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
-  const { name, email, password, confirmPassword } = formData;
+  const { name, email, password, confirmPassword }: formDataProps = formData;
 
-  const change = (event: { target: HTMLInputElement }) => {
+  const change = (event: { target: HTMLInputElement }): void => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 

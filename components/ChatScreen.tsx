@@ -1,6 +1,6 @@
 import React, { useState, useRef, MouseEvent, KeyboardEvent } from "react";
 import { auth, db } from "../firebase";
-import { NextRouter, useRouter } from "next/router";
+import { useRouter, NextRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import {
@@ -12,11 +12,14 @@ import {
   serverTimestamp,
   addDoc,
   setDoc,
+  DocumentData,
+  DocumentReference,
+  CollectionReference,
+  Query,
 } from "firebase/firestore";
 import Message from "./Message";
 import TimeAgo from "timeago-react";
 import getRecipientEmail from "../lib/getRecipientEmail";
-
 import { Avatar } from "@mui/material";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -24,65 +27,46 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
-import { DocumentData } from "@firebase/firestore";
-
-interface ChatScreenArg {
+interface Props {
   chat: DocumentData | undefined;
 }
 
-function ChatScreen({ chat }: ChatScreenArg) {
+function ChatScreen({ chat }: Props): JSX.Element {
   const [user] = useAuthState(auth);
-  const [input, setInput] = useState("");
-  const router: NextRouter = useRouter();
-  const routerId = router.query.id as string;
   const endOfMessageRef = useRef<HTMLDivElement>(null);
+  const [input, setInput] = useState("");
 
-  const chatRef = doc(db, "chats", routerId);
-  const messageRef = collection(chatRef, "messages");
-  const messageQuery = query(messageRef, orderBy("timestamp", "asc"));
+  const router: NextRouter = useRouter();
+  const routerId: string = router.query.id as string;
+  const chatRef: DocumentReference<DocumentData> = doc(db, "chats", routerId);
+  const messageRef: CollectionReference<DocumentData> = collection(
+    chatRef,
+    "messages"
+  );
+  const messageQuery: Query<DocumentData> = query(
+    messageRef,
+    orderBy("timestamp", "asc")
+  );
   const [messagesSnapshot] = useCollection(messageQuery);
 
-  // const recipientEmail = chat ? getRecipientEmail(chat.users, user) : "";
   const recipientEmail: string = getRecipientEmail(chat?.users, user);
 
-  const userRef = collection(db, "users");
+  const userRef: CollectionReference<DocumentData> = collection(db, "users");
   const userEmail: string = getRecipientEmail(chat?.users, user);
-  const userQuery = query(userRef, where("email", "==", userEmail));
+  const userQuery: Query<DocumentData> = query(
+    userRef,
+    where("email", "==", userEmail)
+  );
   const [recipientSnapshot] = useCollection(userQuery);
   const recipientLastSeen = recipientSnapshot?.docs?.[0]
     ?.data()
     .lastSeen.toDate();
-  const recipientData = recipientSnapshot?.docs?.[0]?.data();
+  const recipientData: DocumentData | undefined =
+    recipientSnapshot?.docs?.[0]?.data();
 
-  //map through message and create individual message box
-  const showMessages = () => {
+  const showMessages = (): JSX.Element => {
     return (
       <div>
-        {/* this one uses server side render */}
-        {/* {messagesSnapshot */}
-        {/*   ? messagesSnapshot.docs.map((chat) => { */}
-        {/*       return ( */}
-        {/*         <Message */}
-        {/*           key={chat.id} */}
-        {/*           user={chat.data().user} */}
-        {/*           recipient={recipientEmail} */}
-        {/*           message={chat.data().message} */}
-        {/*           timestamp={chat.data().timestamp?.toDate().toString()} */}
-        {/*         /> */}
-        {/*       ); */}
-        {/*     }) */}
-        {/*   : JSON.parse(messages).map((chat) => { */}
-        {/*       return ( */}
-        {/*         <Message */}
-        {/*           key={chat.id} */}
-        {/*           user={chat.user} */}
-        {/*           recipient={recipientEmail} */}
-        {/*           message={chat.message} */}
-        {/*           timestamp={chat.timestamp} */}
-        {/*         /> */}
-        {/*       ); */}
-        {/*     })} */}
-
         {messagesSnapshot &&
           messagesSnapshot.docs.map((chat) => {
             return (
@@ -123,19 +107,20 @@ function ChatScreen({ chat }: ChatScreenArg) {
     scrollToBottom();
   };
 
-  const clickHandler = (event: MouseEvent) => {
+  //trigger when clicking button
+  const handleClick = (event: MouseEvent): void => {
     event.preventDefault();
     sendMessage();
   };
 
-  const handleKeyPress = (event: KeyboardEvent) => {
-    // trigger when pressing enter
+  //trigger when pressing enter
+  const handleKeyPress = (event: KeyboardEvent): void => {
     if (event.key === "Enter") {
       sendMessage();
     }
   };
 
-  const showLastSeen = () => {
+  const showLastSeen = (): JSX.Element => {
     if (recipientLastSeen !== undefined) {
       return (
         <p>
@@ -150,7 +135,7 @@ function ChatScreen({ chat }: ChatScreenArg) {
     }
   };
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (): void => {
     if (endOfMessageRef.current !== null) {
       endOfMessageRef!.current!.scrollIntoView({
         behavior: "auto",
@@ -163,7 +148,7 @@ function ChatScreen({ chat }: ChatScreenArg) {
     <div className="flex flex-col w-full overflow-y-hidden sm:w-3/4 ">
       {/*HEADER BAR*/}
       <div className="flex items-center">
-        {/*avatar/profile pic*/}
+        {/*Profile pic*/}
         {recipientData && recipientData?.photoURL !== null ? (
           <Avatar
             alt=""
@@ -176,30 +161,29 @@ function ChatScreen({ chat }: ChatScreenArg) {
           </Avatar>
         )}
         <div className="flex-1 m-2">
-          {/*username/title/team*/}
+          {/* Username */}
           <p className="font-semibold">{recipientEmail}</p>
           {showLastSeen()}
         </div>
-        {/* icons */}
+        {/* Icons */}
         <div className="mx-2 space-x-1">
-          {/*attach file*/}
+          {/*Attach file*/}
           <AttachFileIcon className="cursor-pointer hover:text-gray-500" />
-          {/*settings/ three vertical dots*/}
+          {/*Settings/ three vertical dots*/}
           <MoreVertIcon className="cursor-pointer hover:text-gray-500" />
         </div>
       </div>
 
       {/*MESSAGE TEXT CONTAINER*/}
-      {/* {scrollToBottom()} */}
       <div className="flex flex-col-reverse p-10 overflow-y-auto bg-gray-300 border-2 chat-container-height">
         {showMessages()}
       </div>
 
       {/*MESSAGE INPUT CONTAINER*/}
       <div className="flex items-center bg-white">
-        {/*insert emoji*/}
+        {/*Insert emoji*/}
         <InsertEmoticonIcon className="m-2 cursor-pointer hover:text-gray-500" />
-        {/*insert text here to chat*/}
+        {/*Insert text here to chat*/}
         <input
           className="flex-1 w-full h-10 px-2 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
           type="text"
@@ -209,16 +193,16 @@ function ChatScreen({ chat }: ChatScreenArg) {
           onKeyPress={(e) => handleKeyPress(e)}
           placeholder="Your message"
         />
-        {/*mic*/}
+        {/*Mic*/}
         <MicIcon className="mx-1 cursor-pointer hover:text-gray-500" />
-        {/*camera*/}
+        {/*Camera*/}
         <PhotoCameraIcon className="mx-1 cursor-pointer hover:text-gray-500" />
-        {/*send text button*/}
+        {/*Send text button*/}
         <input
           type="submit"
           value="Send"
           disabled={!input}
-          onClick={(e) => clickHandler(e)}
+          onClick={(e) => handleClick(e)}
           className="p-3 py-2 m-2 text-black bg-gray-200 rounded-lg hover:bg-gray-500"
         />
       </div>

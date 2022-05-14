@@ -8,22 +8,27 @@ import {
 import { ChatIcon } from "@heroicons/react/solid";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-
+import { useRouter, NextRouter } from "next/router";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const Navbar = () => {
-  const router = useRouter();
+const Navbar = (): JSX.Element => {
+  const router: NextRouter = useRouter();
   const [user] = useAuthState(auth);
 
-  function classNames(...classes: string[]) {
+  function classNames(...classes: string[]): string {
     return classes.filter(Boolean).join(" ");
   }
 
-  //this is problematic and showing error
-  function MyLink(props: any) {
+  interface MyLinkProps {
+    href: string;
+    children: string;
+    className: string;
+    key?: string;
+    onClick?: ((event: MouseEvent) => void) | undefined;
+  }
+  function MyLink(props: MyLinkProps): JSX.Element {
     let { href, children, ...rest } = props;
 
     return (
@@ -33,8 +38,14 @@ const Navbar = () => {
     );
   }
 
+  interface MainNavigationProps {
+    name: string;
+    href: string;
+    className: string;
+  }
+
   //groups and message is disabled for now
-  const main_navigation = user
+  const main_navigation: MainNavigationProps[] = user
     ? [
         {
           name: "Home",
@@ -115,8 +126,10 @@ const Navbar = () => {
                 )}
               </Disclosure.Button>
               {/*Website logo */}
-              <Link href="/" passHref>
-                <ChatIcon className="m-3 cursor-pointer w-9 h-9" />
+              <Link href="/">
+                <div>
+                  <ChatIcon className="m-3 cursor-pointer w-9 h-9" />
+                </div>
               </Link>
               {/*Item text*/}
               <div className="hidden space-x-5 sm:flex">
