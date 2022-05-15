@@ -15,6 +15,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import * as EmailValidator from "email-validator";
 import { Avatar } from "@mui/material";
+import { getChatsList } from "../lib/referencesUtils";
 
 export const UserBar = (): JSX.Element => {
   const [user] = useAuthState(auth);
@@ -23,10 +24,7 @@ export const UserBar = (): JSX.Element => {
     "chats"
   );
 
-  const userChatQuery: Query<DocumentData> | undefined = user
-    ? query(chatCollection, where("users", "array-contains", user?.email))
-    : undefined;
-  const [chatSnapshot] = useCollection(userChatQuery);
+  const chatSnapshot = getChatsList();
 
   const chatAlreadyExist = (recipientEmail: string): boolean | undefined => {
     if (chatSnapshot !== undefined) {

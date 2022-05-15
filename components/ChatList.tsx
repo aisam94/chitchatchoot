@@ -1,18 +1,11 @@
 import React, { MouseEvent } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter, NextRouter } from "next/router";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import getRecipientEmail from "../lib/getRecipientEmail";
-import {
-  collection,
-  query,
-  where,
-  CollectionReference,
-  DocumentData,
-  Query,
-} from "firebase/firestore";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { DocumentData } from "firebase/firestore";
 import { Avatar } from "@mui/material";
+import { getRecipientData } from "../lib/referencesUtils";
 
 type Props = {
   id: string;
@@ -22,17 +15,8 @@ type Props = {
 const ChatList = ({ id, users }: Props) => {
   const router: NextRouter = useRouter();
   const [user] = useAuthState(auth);
-  const userCollection: CollectionReference<DocumentData> = collection(
-    db,
-    "users"
-  );
-  const queryUser: Query<DocumentData> = query(
-    userCollection,
-    where("email", "==", getRecipientEmail(users, user))
-  );
-  const [recipientSnapshot] = useCollection(queryUser);
-  const recipient: DocumentData | undefined =
-    recipientSnapshot?.docs?.[0]?.data();
+
+  const recipientData: DocumentData | undefined = getRecipientData(users, user);
 
   const recipientEmail: string = getRecipientEmail(users, user);
 
@@ -47,11 +31,11 @@ const ChatList = ({ id, users }: Props) => {
       onClick={(event) => enterChat(event)}
     >
       {/*Recipient circle logo*/}
-      {recipient && recipient?.photoURL !== null ? (
+      {recipientData && recipientData?.photoURL !== null ? (
         <Avatar
           alt=""
           className="mx-2 ring-2 ring-white"
-          src={recipient?.photoURL}
+          src={recipientData?.photoURL}
         />
       ) : (
         <Avatar className="mx-2 ring-1 ring-white">{recipientEmail[0]}</Avatar>

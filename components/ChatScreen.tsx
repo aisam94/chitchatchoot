@@ -2,20 +2,13 @@ import React, { useState, useRef, MouseEvent, KeyboardEvent } from "react";
 import { auth, db } from "../firebase";
 import { useRouter, NextRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollection } from "react-firebase-hooks/firestore";
 import {
   doc,
   collection,
-  orderBy,
-  query,
-  where,
   serverTimestamp,
   addDoc,
   setDoc,
   DocumentData,
-  DocumentReference,
-  CollectionReference,
-  Query,
 } from "firebase/firestore";
 import Message from "./Message";
 import TimeAgo from "timeago-react";
@@ -26,44 +19,30 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import { getMessagesSnapshot, getRecipientData } from "../lib/referencesUtils";
 
 interface Props {
   chat: DocumentData | undefined;
 }
 
-function ChatScreen({ chat }: Props): JSX.Element {
+const ChatScreen = ({ chat }: Props): JSX.Element => {
   const [user] = useAuthState(auth);
   const endOfMessageRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
 
   const router: NextRouter = useRouter();
   const routerId: string = router.query.id as string;
-  const chatRef: DocumentReference<DocumentData> = doc(db, "chats", routerId);
-  const messageRef: CollectionReference<DocumentData> = collection(
-    chatRef,
-    "messages"
-  );
-  const messageQuery: Query<DocumentData> = query(
-    messageRef,
-    orderBy("timestamp", "asc")
-  );
-  const [messagesSnapshot] = useCollection(messageQuery);
+  const messagesSnapshot = getMessagesSnapshot(routerId);
 
+  //fetching recipient infos
   const recipientEmail: string = getRecipientEmail(chat?.users, user);
-
-  const userRef: CollectionReference<DocumentData> = collection(db, "users");
-  const userEmail: string = getRecipientEmail(chat?.users, user);
-  const userQuery: Query<DocumentData> = query(
-    userRef,
-    where("email", "==", userEmail)
+  const recipientData: DocumentData | undefined = getRecipientData(
+    chat?.users,
+    user
   );
-  const [recipientSnapshot] = useCollection(userQuery);
-  const recipientLastSeen = recipientSnapshot?.docs?.[0]
-    ?.data()
-    .lastSeen.toDate();
-  const recipientData: DocumentData | undefined =
-    recipientSnapshot?.docs?.[0]?.data();
+  const recipientLastSeen = recipientData?.lastSeen.toDate();
 
+  //Functions
   const showMessages = (): JSX.Element => {
     return (
       <div>
@@ -208,6 +187,6 @@ function ChatScreen({ chat }: Props): JSX.Element {
       </div>
     </div>
   );
-}
+};
 
 export default ChatScreen;

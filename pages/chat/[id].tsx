@@ -1,21 +1,16 @@
 import React from "react";
 import Head from "next/head";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 import getRecipientEmail from "../../lib/getRecipientEmail";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDocument } from "react-firebase-hooks/firestore";
-import { doc, DocumentData, DocumentReference } from "firebase/firestore";
-import { useRouter, NextRouter } from "next/router";
+import { DocumentData } from "firebase/firestore";
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";
+import { getChatDoc } from "../../lib/referencesUtils";
 
 function Chat() {
   const [user] = useAuthState(auth);
-  const router: NextRouter = useRouter();
-  const routerId: string = router.query.id as string;
-
-  const chatRef: DocumentReference<DocumentData> = doc(db, "chats", routerId);
-  const [chatSnapshot] = useDocument(chatRef);
+  const chatSnapshot = getChatDoc();
   const chatData: DocumentData | undefined = chatSnapshot?.data();
 
   return (
