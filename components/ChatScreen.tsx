@@ -1,7 +1,6 @@
 import React, { useState, useRef, MouseEvent, KeyboardEvent } from "react";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 import { useRouter, NextRouter } from "next/router";
-import { useAuthState } from "react-firebase-hooks/auth";
 import {
   doc,
   collection,
@@ -20,13 +19,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import { getMessagesSnapshot, getRecipientData } from "../lib/referencesUtils";
+import { User } from "firebase/auth";
 
 interface Props {
   chat: DocumentData | undefined;
+  user: User | null | undefined
 }
 
-const ChatScreen = ({ chat }: Props): JSX.Element => {
-  const [user] = useAuthState(auth);
+const ChatScreen = ({ chat, user }: Props): JSX.Element => {
   const endOfMessageRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
 

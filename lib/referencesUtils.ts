@@ -10,13 +10,11 @@ import { User } from "firebase/auth";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { useRouter, NextRouter } from "next/router";
 import { useCollection } from "react-firebase-hooks/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 import getRecipientEmail from "./getRecipientEmail";
 
 //get all chat with user in it
-export const getChatsList = (): QuerySnapshot<DocumentData> | undefined => {
-  const [user] = useAuthState(auth);
+export const getChatsList = (user: User | null | undefined): QuerySnapshot<DocumentData> | undefined => {
   const chatCollection: CollectionReference<DocumentData> = collection(
     db,
     "chats"

@@ -1,6 +1,6 @@
 import React from "react";
 import { DotsVerticalIcon, PlusIcon } from "@heroicons/react/outline";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 import {
   doc,
   setDoc,
@@ -11,20 +11,23 @@ import {
   CollectionReference,
   Query,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import * as EmailValidator from "email-validator";
 import { Avatar } from "@mui/material";
 import { getChatsList } from "../lib/referencesUtils";
+import { User } from "firebase/auth";
 
-export const UserBar = (): JSX.Element => {
-  const [user] = useAuthState(auth);
+interface Props {
+  user: User | null | undefined
+}
+
+export const UserBar = ({ user }: Props): JSX.Element => {
   const chatCollection: CollectionReference<DocumentData> = collection(
     db,
     "chats"
   );
 
-  const chatSnapshot = getChatsList();
+  const chatSnapshot = getChatsList(user);
 
   const chatAlreadyExist = (recipientEmail: string): boolean | undefined => {
     if (chatSnapshot !== undefined) {

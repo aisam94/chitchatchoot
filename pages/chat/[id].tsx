@@ -25,7 +25,7 @@ function Chat() {
         <Sidebar />
       </div>
       {/*chat container*/}
-      {chatSnapshot && <ChatScreen chat={chatData} />}
+      {chatSnapshot && <ChatScreen chat={chatData} user={user} />}
     </div>
   );
 }

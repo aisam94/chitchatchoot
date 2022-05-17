@@ -45,7 +45,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
 
   return (
     <>
-      <Navbar />
+      <Navbar user={user} />
       <div className="screen-height">
         {user ? (
           <Component {...pageProps} />

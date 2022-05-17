@@ -1,21 +1,19 @@
 import React, { MouseEvent } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter, NextRouter } from "next/router";
-import { auth } from "../firebase";
 import getRecipientEmail from "../lib/getRecipientEmail";
 import { DocumentData } from "firebase/firestore";
 import { Avatar } from "@mui/material";
 import { getRecipientData } from "../lib/referencesUtils";
+import { User } from "firebase/auth";
 
 type Props = {
   id: string;
   users: string[];
+  user: User | null | undefined
 };
 
-const ChatList = ({ id, users }: Props) => {
+const ChatList = ({ id, users, user }: Props) => {
   const router: NextRouter = useRouter();
-  const [user] = useAuthState(auth);
-
   const recipientData: DocumentData | undefined = getRecipientData(users, user);
 
   const recipientEmail: string = getRecipientEmail(users, user);
