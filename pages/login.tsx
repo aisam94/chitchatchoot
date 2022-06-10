@@ -26,7 +26,7 @@ const Login: NextPage = () => {
 
   //toggle password visibility
   const togglePasswordVisibility = () => {
-    setIsPasswordShown(isPasswordShown ? false : true);
+    setIsPasswordShown(!isPasswordShown);
   };
 
   const { email, password } = formData;
