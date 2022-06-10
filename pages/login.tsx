@@ -5,8 +5,10 @@ import Link from "next/link";
 import { auth, provider } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { NextRouter, useRouter } from "next/router";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 
 const Login: NextPage = () => {
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
   const router: NextRouter = useRouter();
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).catch(alert);
@@ -21,6 +23,11 @@ const Login: NextPage = () => {
     email: "",
     password: "",
   });
+
+  //toggle password visibility
+  const togglePasswordVisibility = () => {
+    setIsPasswordShown(isPasswordShown ? false : true);
+  };
 
   const { email, password } = formData;
 
@@ -70,16 +77,30 @@ const Login: NextPage = () => {
               onChange={(event) => change(event)}
               required
             />
-            {/*Password*/}
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
-              onChange={(event) => change(event)}
-              required
-            />
+            {/*Password wrapper*/}
+            <div className="relative flex items-center">
+              {/*Password*/}
+              <input
+                type={isPasswordShown ? "text" : "password"}
+                placeholder="Password"
+                name="password"
+                value={password}
+                className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
+                onChange={(event) => change(event)}
+                required
+              />
+              {/* Eye password toggle  */}
+              <div
+                className="absolute top-1/2 transform -translate-y-1/2 right-3"
+                onClick={togglePasswordVisibility}
+              >
+                {isPasswordShown ? (
+                  <EyeOffIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                ) : (
+                  <EyeIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                )}
+              </div>
+            </div>
           </div>
           <input
             type="submit"

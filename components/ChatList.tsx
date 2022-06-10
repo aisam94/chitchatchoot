@@ -9,13 +9,12 @@ import { User } from "firebase/auth";
 type Props = {
   id: string;
   users: string[];
-  user: User | null | undefined
+  user: User | null | undefined;
 };
 
 const ChatList = ({ id, users, user }: Props) => {
   const router: NextRouter = useRouter();
   const recipientData: DocumentData | undefined = getRecipientData(users, user);
-
   const recipientEmail: string = getRecipientEmail(users, user);
 
   const enterChat = (event: MouseEvent): void => {

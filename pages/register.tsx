@@ -5,9 +5,20 @@ import Link from "next/link";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../firebase";
 import { useRouter, NextRouter } from "next/router";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 
 const Register: NextPage = () => {
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isPassword2Shown, setIsPassword2Shown] = useState(false);
   const router: NextRouter = useRouter();
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordShown(!isPasswordShown);
+  };
+
+  const togglePassword2Visibility = () => {
+    setIsPassword2Shown(!isPassword2Shown);
+  };
 
   const createUser = (email: string, password: string): void => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -82,26 +93,54 @@ const Register: NextPage = () => {
               onChange={(e) => change(e)}
               required
             />
-            {/*Password*/}
-            <input
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
-              onChange={(e) => change(e)}
-              required
-            />
-            {/*Password 2*/}
-            <input
-              type="password"
-              placeholder="Reenter password"
-              name="confirmPassword"
-              value={confirmPassword}
-              className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
-              onChange={(e) => change(e)}
-              required
-            />
+            {/* Password wrapper */}
+            <div className="relative flex items-center">
+              {/*Password*/}
+              <input
+                type={isPasswordShown ? "text" : "password"}
+                placeholder="Password"
+                name="password"
+                value={password}
+                className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
+                onChange={(e) => change(e)}
+                required
+              />
+              {/* Eye password toggle */}
+              <div
+                className="absolute top-1/2 transform -translate-y-1/2 right-3"
+                onClick={togglePasswordVisibility}
+              >
+                {isPasswordShown ? (
+                  <EyeOffIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                ) : (
+                  <EyeIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                )}
+              </div>
+            </div>
+            {/*Password 2 wrapper*/}
+            <div className="relative flex items-center">
+              {/* Password 2 */}
+              <input
+                type={isPassword2Shown ? "text" : "password"}
+                placeholder="Reenter password"
+                name="confirmPassword"
+                value={confirmPassword}
+                className="px-2 py-1 border border-gray-300 appearance-none focus:outline-none focus:border-indigo-500"
+                onChange={(e) => change(e)}
+                required
+              />
+              {/* Eye password 2 toggle */}
+              <div
+                className="absolute top-1/2 transform -translate-y-1/2 right-3"
+                onClick={togglePassword2Visibility}
+              >
+                {isPassword2Shown ? (
+                  <EyeOffIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                ) : (
+                  <EyeIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                )}
+              </div>
+            </div>
           </div>
           <input
             className="py-2 text-white bg-gray-400 rounded hover:bg-gray-500"

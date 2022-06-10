@@ -18,7 +18,7 @@ import { getChatsList } from "../lib/referencesUtils";
 import { User } from "firebase/auth";
 
 interface Props {
-  user: User | null | undefined
+  user: User | null | undefined;
 }
 
 export const UserBar = ({ user }: Props): JSX.Element => {
