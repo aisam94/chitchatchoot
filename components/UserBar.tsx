@@ -14,7 +14,7 @@ import {
 import { useCollection } from "react-firebase-hooks/firestore";
 import * as EmailValidator from "email-validator";
 import { Avatar } from "@mui/material";
-import { getChatsList } from "../lib/referencesUtils";
+import { GetChatsList } from "../lib/referencesUtils";
 import { User } from "firebase/auth";
 
 interface Props {
@@ -27,7 +27,7 @@ export const UserBar = ({ user }: Props): JSX.Element => {
     "chats"
   );
 
-  const chatSnapshot = getChatsList(user);
+  const chatSnapshot = GetChatsList(user);
 
   const chatAlreadyExist = (recipientEmail: string): boolean | undefined => {
     if (chatSnapshot !== undefined) {

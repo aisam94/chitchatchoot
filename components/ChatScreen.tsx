@@ -18,12 +18,12 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MicIcon from "@mui/icons-material/Mic";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import { getMessagesSnapshot, getRecipientData } from "../lib/referencesUtils";
+import { GetMessagesSnapshot, GetRecipientData } from "../lib/referencesUtils";
 import { User } from "firebase/auth";
 
 interface Props {
   chat: DocumentData | undefined;
-  user: User | null | undefined
+  user: User | null | undefined;
 }
 
 const ChatScreen = ({ chat, user }: Props): JSX.Element => {
@@ -32,11 +32,11 @@ const ChatScreen = ({ chat, user }: Props): JSX.Element => {
 
   const router: NextRouter = useRouter();
   const routerId: string = router.query.id as string;
-  const messagesSnapshot = getMessagesSnapshot(routerId);
+  const messagesSnapshot = GetMessagesSnapshot(routerId);
 
   //fetching recipient infos
   const recipientEmail: string = getRecipientEmail(chat?.users, user);
-  const recipientData: DocumentData | undefined = getRecipientData(
+  const recipientData: DocumentData | undefined = GetRecipientData(
     chat?.users,
     user
   );

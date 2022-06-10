@@ -14,7 +14,9 @@ import { db } from "../firebase";
 import getRecipientEmail from "./getRecipientEmail";
 
 //get all chat with user in it
-export const getChatsList = (user: User | null | undefined): QuerySnapshot<DocumentData> | undefined => {
+export const GetChatsList = (
+  user: User | null | undefined
+): QuerySnapshot<DocumentData> | undefined => {
   const chatCollection: CollectionReference<DocumentData> = collection(
     db,
     "chats"
@@ -28,7 +30,7 @@ export const getChatsList = (user: User | null | undefined): QuerySnapshot<Docum
 };
 
 //get a single chat document snapshot
-export const getChatDoc = () => {
+export const GetChatDoc = () => {
   const router: NextRouter = useRouter();
   const routerId: string = router.query.id as string;
   const chatRef: DocumentReference<DocumentData> = doc(db, "chats", routerId);
@@ -36,7 +38,7 @@ export const getChatDoc = () => {
   return chatSnapshot;
 };
 
-export const getMessagesSnapshot = (
+export const GetMessagesSnapshot = (
   routerId: string
 ): QuerySnapshot<DocumentData> | undefined => {
   const chatRef: DocumentReference<DocumentData> = doc(db, "chats", routerId);
@@ -53,13 +55,14 @@ export const getMessagesSnapshot = (
   return messagesSnapshot;
 };
 
-export const getRecipientData = (
+export const GetRecipientData = (
   users: string[],
   user: User | null | undefined
 ): DocumentData | undefined => {
-  if (!users) {
-    return undefined;
-  }
+  //check if users exist
+  // if (!users) {
+  //   return undefined;
+  // }
   const userRef: CollectionReference<DocumentData> = collection(db, "users");
   // const recipientEmail: string = getRecipientEmail(chat?.users, user);
   const recipientEmail: string = getRecipientEmail(users, user);

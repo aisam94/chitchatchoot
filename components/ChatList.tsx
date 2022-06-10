@@ -3,7 +3,7 @@ import { useRouter, NextRouter } from "next/router";
 import getRecipientEmail from "../lib/getRecipientEmail";
 import { DocumentData } from "firebase/firestore";
 import { Avatar } from "@mui/material";
-import { getRecipientData } from "../lib/referencesUtils";
+import { GetRecipientData } from "../lib/referencesUtils";
 import { User } from "firebase/auth";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 
 const ChatList = ({ id, users, user }: Props) => {
   const router: NextRouter = useRouter();
-  const recipientData: DocumentData | undefined = getRecipientData(users, user);
+  const recipientData: DocumentData | undefined = GetRecipientData(users, user);
   const recipientEmail: string = getRecipientEmail(users, user);
 
   const enterChat = (event: MouseEvent): void => {

@@ -6,11 +6,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { DocumentData } from "firebase/firestore";
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";
-import { getChatDoc } from "../../lib/referencesUtils";
+import { GetChatDoc } from "../../lib/referencesUtils";
 
 function Chat() {
   const [user] = useAuthState(auth);
-  const chatSnapshot = getChatDoc();
+  const chatSnapshot = GetChatDoc();
   const chatData: DocumentData | undefined = chatSnapshot?.data();
 
   return (
