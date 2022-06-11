@@ -6,6 +6,10 @@ import { auth, provider } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { NextRouter, useRouter } from "next/router";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const Login: NextPage = () => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -49,7 +53,24 @@ const Login: NextPage = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        //handle notification error display
+        if (errorCode === "auth/too-many-requests") {
+          createNotification(
+            "Access to this account has been temporarily disabled due to many failed login attempts"
+          );
+        } else if (
+          errorCode === "auth/wrong-password" ||
+          errorCode === "auth/user-not-found"
+        ) {
+          createNotification("Email or password is wrong");
+        } else {
+          createNotification("Error signing in");
+        }
       });
+  };
+
+  const createNotification = (errorMsg: string): any => {
+    return NotificationManager.error(errorMsg, "", 500);
   };
 
   return (
@@ -59,6 +80,7 @@ const Login: NextPage = () => {
         <meta name="description" content="login" />
         <link rel="icon" href="" />
       </Head>
+      <NotificationContainer />
       <main className="flex flex-col items-center pt-4 space-y-5">
         <h1 className="text-xl font-bold">Sign in to your account</h1>
         <form

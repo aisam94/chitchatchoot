@@ -6,6 +6,10 @@ import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../firebase";
 import { useRouter, NextRouter } from "next/router";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const Register: NextPage = () => {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -24,21 +28,22 @@ const Register: NextPage = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        router.push("/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        createNotification(errorCode);
       });
   };
 
   const submit = (event: FormEvent): void => {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      // passwords not matching
-      console.log("password not matching");
-    } else {
+    if (password === confirmPassword) {
       createUser(email, password);
-      router.push("/");
+    } else {
+      // passwords not matching
+      createNotification("Password not matching");
     }
   };
 
@@ -62,6 +67,29 @@ const Register: NextPage = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
+  const createNotification = (errorMsg: string): any => {
+    switch (errorMsg) {
+      case "auth/weak-password":
+        return NotificationManager.error(
+          "Password should be at least 6 characters",
+          "",
+          500
+        );
+        break;
+      case "auth/invalid-email":
+        return NotificationManager.error("Invalid email format", "", 500);
+        break;
+      case "auth/email-already-in-use":
+        return NotificationManager.error("Email already in use", "", 500);
+        break;
+      case "password not matching":
+        return NotificationManager.error("Password not matching", "", 500);
+        break;
+      default:
+        return NotificationManager.error("Error registering account", "", 500);
+    }
+  };
+
   return (
     <div>
       <Head>
@@ -69,6 +97,7 @@ const Register: NextPage = () => {
         <meta name="description" content="register" />
         <link rel="icon" href="" />
       </Head>
+      <NotificationContainer />
       <main className="flex flex-col items-center pt-4 space-y-5">
         <h1 className="text-xl font-bold">Register your account</h1>
         <form className="flex flex-col space-y-4" onSubmit={(e) => submit(e)}>

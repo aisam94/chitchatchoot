@@ -9,6 +9,7 @@ import About from "./about";
 import Settings from "./settings";
 import Navbar from "../components/Navbar";
 import { NextRouter, useRouter } from "next/router";
+import "react-notifications/lib/notifications.css";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
