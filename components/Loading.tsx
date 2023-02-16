@@ -1,9 +1,14 @@
-import { SyncLoader } from "react-spinners";
+import styles from "./loading.module.css";
 
 const Loading = (): JSX.Element => {
   return (
     <div className="flex items-center justify-center w-screen h-screen">
-      <SyncLoader color="#9ca3af" loading={true} size={40} />
+      <div className={styles.loading}>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   );
 };
