@@ -10,8 +10,8 @@
     "tsc:w": "tsc --watch"
   },
   "dependencies": {
-    "@emotion/react": "^11.5.0",
-    "@emotion/styled": "^11.3.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
     "@mui/icons-material": "^5.0.5",
