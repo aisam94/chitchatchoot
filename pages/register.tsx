@@ -6,12 +6,12 @@ import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../firebase";
 import { useRouter, NextRouter } from "next/router";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import NotificationContainer from "../components/NotificationContainer";
 
 const Register: NextPage = () => {
+  const [trigger, setTrigger] = useState(0);
+  const [notificationColor, setNotificationColor] = useState("");
+  const [notificationText, setNotificationText] = useState("");
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isPassword2Shown, setIsPassword2Shown] = useState(false);
   const router: NextRouter = useRouter();
@@ -68,25 +68,23 @@ const Register: NextPage = () => {
   };
 
   const createNotification = (errorMsg: string): any => {
+    setTrigger((trigger) => trigger + 1);
+    setNotificationColor("error");
     switch (errorMsg) {
       case "auth/weak-password":
-        return NotificationManager.error(
-          "Password should be at least 6 characters",
-          "",
-          500
-        );
+        setNotificationText("Password should be at least 6 characters");
         break;
       case "auth/invalid-email":
-        return NotificationManager.error("Invalid email format", "", 500);
+        setNotificationText("Invalid email format");
         break;
       case "auth/email-already-in-use":
-        return NotificationManager.error("Email already in use", "", 500);
+        setNotificationText("Email already in use");
         break;
       case "password not matching":
-        return NotificationManager.error("Password not matching", "", 500);
+        setNotificationText("Password not matching");
         break;
       default:
-        return NotificationManager.error("Error registering account", "", 500);
+        setNotificationText("Error registering account");
     }
   };
 
@@ -97,7 +95,11 @@ const Register: NextPage = () => {
         <meta name="description" content="register" />
         <link rel="icon" href="" />
       </Head>
-      <NotificationContainer />
+      <NotificationContainer
+        trigger={trigger}
+        color={notificationColor}
+        text={notificationText}
+      />
       <main className="flex flex-col items-center pt-4 space-y-5">
         <h1 className="text-xl font-bold">Register your account</h1>
         <form className="flex flex-col space-y-4" onSubmit={(e) => submit(e)}>

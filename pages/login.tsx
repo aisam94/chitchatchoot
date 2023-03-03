@@ -6,12 +6,13 @@ import { auth, provider } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { NextRouter, useRouter } from "next/router";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import NotificationContainer from "../components/NotificationContainer";
 
 const Login: NextPage = () => {
+  const [trigger, setTrigger] = useState(0);
+  const [notificationColor, setNotificationColor] = useState('');
+  const [notificationText, setNotificationText] = useState('');
+
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const router: NextRouter = useRouter();
   const signInWithGoogle = () => {
@@ -70,7 +71,9 @@ const Login: NextPage = () => {
   };
 
   const createNotification = (errorMsg: string): any => {
-    return NotificationManager.error(errorMsg, "", 500);
+    setTrigger((trigger) => trigger + 1);
+    setNotificationColor("error");
+    setNotificationText(errorMsg);
   };
 
   return (
@@ -80,7 +83,7 @@ const Login: NextPage = () => {
         <meta name="description" content="login" />
         <link rel="icon" href="" />
       </Head>
-      <NotificationContainer />
+      <NotificationContainer trigger={trigger} color={notificationColor} text={notificationText}/>
       <main className="flex flex-col items-center pt-4 space-y-5">
         <h1 className="text-xl font-bold">Sign in to your account</h1>
         <form
