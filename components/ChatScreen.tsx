@@ -140,7 +140,7 @@ const ChatScreen = ({ chat, user }: Props): JSX.Element => {
           {showLastSeen()}
         </div>
         {/* Icons */}
-        <div className="mx-1">
+        <div className="mx-1 flex">
           {/*Attach file*/}
           <img src="/icons/attachfile.svg" className="cursor-pointer w-7 h-7" />
           {/*Settings/ three vertical dots*/}
