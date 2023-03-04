@@ -148,7 +148,7 @@ const ErrorIcon = ({ className }: { className?: string }) => {
   );
 };
 
-function getIcon(color: any) {
+function getIcon(color: string) {
   switch (color) {
     case "info":
       return <InfoIcon className="h-5 w-5" />;

@@ -66,7 +66,7 @@ const Register: NextPage = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const createNotification = (errorMsg: string): any => {
+  const createNotification = (errorMsg: string): void => {
     setTrigger((trigger) => trigger + 1);
     setNotificationColor("error");
     switch (errorMsg) {

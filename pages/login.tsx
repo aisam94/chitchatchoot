@@ -69,7 +69,7 @@ const Login: NextPage = () => {
       });
   };
 
-  const createNotification = (errorMsg: string): any => {
+  const createNotification = (errorMsg: string): void => {
     setTrigger((trigger) => trigger + 1);
     setNotificationColor("error");
     setNotificationText(errorMsg);
