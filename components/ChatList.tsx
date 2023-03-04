@@ -2,7 +2,6 @@ import React, { MouseEvent } from "react";
 import { useRouter, NextRouter } from "next/router";
 import getRecipientEmail from "../lib/getRecipientEmail";
 import { DocumentData } from "firebase/firestore";
-import { Avatar } from "@mui/material";
 import { GetRecipientData } from "../lib/referencesUtils";
 import { User } from "firebase/auth";
 
@@ -29,13 +28,16 @@ const ChatList = ({ id, users, user }: Props) => {
     >
       {/*Recipient circle logo*/}
       {recipientData && recipientData?.photoURL !== null ? (
-        <Avatar
-          alt=""
-          className="mx-2 ring-2 ring-white"
+        <img
           src={recipientData?.photoURL}
+          alt="photoImg"
+          className="mx-2 w-10 h-10 rounded-full object-cover"
         />
       ) : (
-        <Avatar className="mx-2 ring-1 ring-white">{recipientEmail[0]}</Avatar>
+        <div className="relative mx-2 w-10 h-10 bg-gray-400 rounded-full flex justify-center items-center text-center p-5 shadow-xl">
+          <span className="absolute text-3xl left-0 top-0 text-purple-800"></span>
+          {recipientEmail[0]}
+        </div>
       )}
       {/*Recipient email/ name*/}
       <p className="break-words chatlist-recipient-width ">{recipientEmail}</p>

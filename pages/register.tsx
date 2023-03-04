@@ -5,7 +5,6 @@ import Link from "next/link";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../firebase";
 import { useRouter, NextRouter } from "next/router";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import NotificationContainer from "../components/NotificationContainer";
 
 const Register: NextPage = () => {
@@ -142,9 +141,15 @@ const Register: NextPage = () => {
                 onClick={togglePasswordVisibility}
               >
                 {isPasswordShown ? (
-                  <EyeOffIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                  <img
+                    src="/icons/eye_off.svg"
+                    className="cursor-pointer w-5 h-5"
+                  />
                 ) : (
-                  <EyeIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                  <img
+                    src="/icons/eye_on.svg"
+                    className="cursor-pointer w-5 h-5"
+                  />
                 )}
               </div>
             </div>
@@ -166,9 +171,15 @@ const Register: NextPage = () => {
                 onClick={togglePassword2Visibility}
               >
                 {isPassword2Shown ? (
-                  <EyeOffIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                  <img
+                    src="/icons/eye_off.svg"
+                    className="cursor-pointer w-5 h-5"
+                  />
                 ) : (
-                  <EyeIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                  <img
+                    src="/icons/eye_on.svg"
+                    className="cursor-pointer w-5 h-5"
+                  />
                 )}
               </div>
             </div>

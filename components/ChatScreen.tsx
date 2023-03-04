@@ -12,12 +12,6 @@ import {
 import Message from "./Message";
 import TimeAgo from "timeago-react";
 import getRecipientEmail from "../lib/getRecipientEmail";
-import { Avatar } from "@mui/material";
-import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MicIcon from "@mui/icons-material/Mic";
-import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import { GetMessagesSnapshot, GetRecipientData } from "../lib/referencesUtils";
 import { User } from "firebase/auth";
 
@@ -129,15 +123,16 @@ const ChatScreen = ({ chat, user }: Props): JSX.Element => {
       <div className="flex items-center">
         {/*Profile pic*/}
         {recipientData && recipientData?.photoURL !== null ? (
-          <Avatar
-            alt=""
-            className="mx-2 ring-2 ring-white"
+          <img
             src={recipientData?.photoURL}
+            alt="photoImg"
+            className="mx-2 w-10 h-10 rounded-full object-cover"
           />
         ) : (
-          <Avatar className="mx-2 ring-1 ring-white">
+          <div className="relative mx-2 w-10 h-10 bg-gray-400 rounded-full flex justify-center items-center text-center p-5 shadow-xl">
+            <span className="absolute text-3xl left-0 top-0 text-purple-800"></span>
             {recipientEmail[0]}
-          </Avatar>
+          </div>
         )}
         <div className="flex-1 m-2">
           {/* Username */}
@@ -145,11 +140,14 @@ const ChatScreen = ({ chat, user }: Props): JSX.Element => {
           {showLastSeen()}
         </div>
         {/* Icons */}
-        <div className="mx-2 space-x-1">
+        <div className="mx-1">
           {/*Attach file*/}
-          <AttachFileIcon className="cursor-pointer hover:text-gray-500" />
+          <img src="/icons/attachfile.svg" className="cursor-pointer w-7 h-7" />
           {/*Settings/ three vertical dots*/}
-          <MoreVertIcon className="cursor-pointer hover:text-gray-500" />
+          <img
+            src="/icons/dots_vertical.svg"
+            className="cursor-pointer w-7 h-7"
+          />
         </div>
       </div>
 
@@ -161,7 +159,10 @@ const ChatScreen = ({ chat, user }: Props): JSX.Element => {
       {/*MESSAGE INPUT CONTAINER*/}
       <div className="flex items-center bg-white">
         {/*Insert emoji*/}
-        <InsertEmoticonIcon className="m-2 cursor-pointer hover:text-gray-500" />
+        <img
+          src="/icons/add_emoticon.svg"
+          className="m-2 cursor-pointer w-7 h-7"
+        />
         {/*Insert text here to chat*/}
         <input
           className="flex-1 w-full h-10 px-2 text-sm bg-white border-2 border-gray-300 rounded-lg focus:outline-none"
@@ -173,9 +174,9 @@ const ChatScreen = ({ chat, user }: Props): JSX.Element => {
           placeholder="Your message"
         />
         {/*Mic*/}
-        <MicIcon className="mx-1 cursor-pointer hover:text-gray-500" />
+        <img src="/icons/mic_on.svg" className="m-x-1 cursor-pointer w-7 h-7" />
         {/*Camera*/}
-        <PhotoCameraIcon className="mx-1 cursor-pointer hover:text-gray-500" />
+        <img src="/icons/camera.svg" className="m-x-1 cursor-pointer w-7 h-7" />
         {/*Send text button*/}
         <input
           type="submit"

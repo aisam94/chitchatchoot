@@ -1,16 +1,5 @@
 import { MouseEvent } from "react";
 import type { NextPage } from "next";
-
-import {
-  MoonIcon,
-  VolumeUpIcon,
-  CheckCircleIcon,
-  LogoutIcon,
-  DocumentTextIcon,
-  TrashIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/outline";
-
 import { NextRouter, useRouter } from "next/router";
 import { signOut, deleteUser } from "firebase/auth";
 import { auth } from "../firebase";
@@ -50,7 +39,7 @@ const Settings: NextPage = () => {
           <div className="space-y-2">
             {/*enable dark theme*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <MoonIcon className="w-6 h-6" />
+              <img src="/icons/darkmode.svg" className="w-6 h-6"/>
               <label
                 htmlFor="dark-toggle"
                 className="cursor-pointer select-none settings-text-width"
@@ -72,7 +61,7 @@ const Settings: NextPage = () => {
             </div>
             {/*show online status*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <CheckCircleIcon className="w-6 h-6" />
+              <img src="/icons/check_circle.svg" className="w-6 h-6"/>
               <label
                 htmlFor="online-status-toggle"
                 className="cursor-pointer select-none settings-text-width"
@@ -94,7 +83,8 @@ const Settings: NextPage = () => {
             </div>
             {/*enable sound notification*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <VolumeUpIcon className="w-6 h-6" />
+
+              <img src="/icons/volume_up.svg" className="w-6 h-6"/>
               <label
                 htmlFor="sound-bell-toggle"
                 className="cursor-pointer select-none settings-text-width"
@@ -116,18 +106,18 @@ const Settings: NextPage = () => {
             </div>
             {/*change text font*/}
             <div className="flex space-x-2 hover:bg-gray-200">
-              <DocumentTextIcon className="w-6 h-6" />
+              <img src="/icons/document.svg" className="w-6 h-6"/>
               <label className="cursor-pointer select-none settings-text-width">
                 Change text font
               </label>
-              <ChevronRightIcon className="w-6 h-6" />
+              <img src="/icons/chevron_right.svg" className="w-6 h-6"/>
             </div>
             {/*delete account*/}
             <div
               onClick={deleteAccount}
               className="flex space-x-2 hover:bg-gray-200"
             >
-              <TrashIcon className="w-6 h-6" />
+              <img src="/icons/trash.svg" className="w-6 h-6"/>
               <label className="cursor-pointer select-none settings-text-width">
                 Delete account
               </label>
@@ -137,7 +127,7 @@ const Settings: NextPage = () => {
               className="flex space-x-2 hover:bg-gray-200"
               onClick={(event) => handleClick(event)}
             >
-              <LogoutIcon className="w-6 h-6 transform rotate-180" />
+              <img src="/icons/logout.svg" className="w-6 h-6 transform rotate-180"/>
               <label className="cursor-pointer select-none settings-text-width">
                 Log out of account
               </label>

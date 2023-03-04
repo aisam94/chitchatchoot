@@ -5,13 +5,12 @@ import Link from "next/link";
 import { auth, provider } from "../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { NextRouter, useRouter } from "next/router";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import NotificationContainer from "../components/NotificationContainer";
 
 const Login: NextPage = () => {
   const [trigger, setTrigger] = useState(0);
-  const [notificationColor, setNotificationColor] = useState('');
-  const [notificationText, setNotificationText] = useState('');
+  const [notificationColor, setNotificationColor] = useState("");
+  const [notificationText, setNotificationText] = useState("");
 
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const router: NextRouter = useRouter();
@@ -83,7 +82,11 @@ const Login: NextPage = () => {
         <meta name="description" content="login" />
         <link rel="icon" href="" />
       </Head>
-      <NotificationContainer trigger={trigger} color={notificationColor} text={notificationText}/>
+      <NotificationContainer
+        trigger={trigger}
+        color={notificationColor}
+        text={notificationText}
+      />
       <main className="flex flex-col items-center pt-4 space-y-5">
         <h1 className="text-xl font-bold">Sign in to your account</h1>
         <form
@@ -120,9 +123,15 @@ const Login: NextPage = () => {
                 onClick={togglePasswordVisibility}
               >
                 {isPasswordShown ? (
-                  <EyeOffIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                  <img
+                    src="/icons/eye_off.svg"
+                    className="cursor-pointer w-5 h-5"
+                  />
                 ) : (
-                  <EyeIcon className="cursor-pointer w-5 h-5 text-gray-300 hover:text-gray-500" />
+                  <img
+                    src="/icons/eye_on.svg"
+                    className="cursor-pointer w-5 h-5"
+                  />
                 )}
               </div>
             </div>

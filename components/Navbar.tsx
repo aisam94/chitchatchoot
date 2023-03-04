@@ -1,11 +1,4 @@
-import React, { Fragment, MouseEvent } from "react";
-import {
-  UserCircleIcon,
-  SearchIcon,
-  XIcon,
-  MenuIcon,
-} from "@heroicons/react/outline";
-import { ChatIcon } from "@heroicons/react/solid";
+import { Fragment, MouseEvent } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
@@ -13,7 +6,7 @@ import { signOut, User } from "firebase/auth";
 import { auth } from "../firebase";
 
 interface Props {
-  user: User | null | undefined
+  user: User | null | undefined;
 }
 
 const Navbar = ({ user }: Props): JSX.Element => {
@@ -49,69 +42,69 @@ const Navbar = ({ user }: Props): JSX.Element => {
   //groups and message is disabled for now
   const main_navigation: MainNavigationProps[] = user
     ? [
-      {
-        name: "Home",
-        href: "/",
-        className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
-      },
-      {
-        name: "Groups",
-        href: "#",
-        className: "p-2 rounded-md text-gray-500",
-      },
-      {
-        name: "Message",
-        href: "#",
-        className: "p-2 rounded-md text-gray-500",
-      },
-      {
-        name: "About",
-        href: "/about",
-        className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
-      },
-    ]
+        {
+          name: "Home",
+          href: "/",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+        {
+          name: "Groups",
+          href: "#",
+          className: "p-2 rounded-md text-gray-500",
+        },
+        {
+          name: "Message",
+          href: "#",
+          className: "p-2 rounded-md text-gray-500",
+        },
+        {
+          name: "About",
+          href: "/about",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+      ]
     : [
-      {
-        name: "Login",
-        href: "/login",
-        className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
-      },
-      {
-        name: "Register",
-        href: "/register",
-        className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
-      },
-      {
-        name: "About",
-        href: "/about",
-        className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
-      },
-    ];
+        {
+          name: "Login",
+          href: "/login",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+        {
+          name: "Register",
+          href: "/register",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+        {
+          name: "About",
+          href: "/about",
+          className: "p-2 rounded-md hover:text-white hover:bg-gray-500",
+        },
+      ];
 
   const profile_navigation = user
     ? [
-      { name: "Profile", href: "/" },
-      {
-        name: "Settings",
-        href: "/settings",
-      },
-      {
-        name: "Log out",
-        href: "",
-        onclick(event: MouseEvent) {
-          //why does this work???
-          event.preventDefault();
-          router.push("/");
-          signOut(auth);
+        { name: "Profile", href: "/" },
+        {
+          name: "Settings",
+          href: "/settings",
         },
-      },
-    ]
+        {
+          name: "Log out",
+          href: "",
+          onclick(event: MouseEvent) {
+            //why does this work???
+            event.preventDefault();
+            router.push("/");
+            signOut(auth);
+          },
+        },
+      ]
     : [
-      {
-        name: "Settings",
-        href: "/settings",
-      },
-    ];
+        {
+          name: "Settings",
+          href: "/settings",
+        },
+      ];
 
   return (
     <Disclosure as="nav" className="bg-gray-300">
@@ -122,15 +115,26 @@ const Navbar = ({ user }: Props): JSX.Element => {
               {/*Menu toggle open items*/}
               <Disclosure.Button className="inline-flex items-center justify-center p-2 ml-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-500 sm:hidden">
                 {open ? (
-                  <XIcon className="block w-6 h-6" aria-hidden="true" />
+                  <img
+                    src="/icons/x.svg"
+                    className="block w-6 h-6"
+                    aria-hidden="true"
+                  />
                 ) : (
-                  <MenuIcon className="block w-6 h-6" aria-hidden="true" />
+                  <img
+                    src="/icons/menu.svg"
+                    className="block w-6 h-6"
+                    aria-hidden="true"
+                  />
                 )}
               </Disclosure.Button>
               {/*Website logo */}
               <Link href="/">
                 <div>
-                  <ChatIcon className="m-3 cursor-pointer w-9 h-9" />
+                  <img
+                    src="/icons/chat.svg"
+                    className="m-3 cursor-pointer w-9 h-9"
+                  />
                 </div>
               </Link>
               {/*Item text*/}
@@ -158,7 +162,7 @@ const Navbar = ({ user }: Props): JSX.Element => {
                   type="submit"
                   className="absolute top-0 right-0 mt-3 mr-3"
                 >
-                  <SearchIcon className="w-4 h-4" />
+                  <img src="/icons/search.svg" className="w-4 h-4" />
                 </button>{" "}
               </div>
               <div className="flex mr-3 space-x-2">
@@ -167,8 +171,9 @@ const Navbar = ({ user }: Props): JSX.Element => {
                   <div>
                     <Menu.Button>
                       {/*Circle profile picture dropdown*/}
-                      <UserCircleIcon
-                        className="p-1 w-9 h-9 hover:text-gray-500"
+                      <img
+                        src="/icons/account_circle.svg"
+                        className="p-0 w-8 h-8 hover:text-gray-500"
                         aria-hidden="true"
                       />
                     </Menu.Button>
@@ -231,7 +236,7 @@ const Navbar = ({ user }: Props): JSX.Element => {
                 type="submit"
                 className="relative mt-3 mr-3 right-7 top-1"
               >
-                <SearchIcon className="w-4 h-4" />
+                <img src="/icons/search.svg" className="w-4 h-4" />
               </button>{" "}
             </div>
           </Disclosure.Panel>
