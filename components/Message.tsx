@@ -14,7 +14,7 @@ const Message = ({
   timestamp,
   recipient,
 }: Props): JSX.Element => {
-  const timeformatted = dayjs(timestamp).format("h:mm A");
+  const timeformatted = dayjs(timestamp).format("h:mm A");// 12:59 AM format
 
   if (recipient !== user) {
     return (

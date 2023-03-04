@@ -10,9 +10,9 @@ import {
   Query,
 } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
-import * as EmailValidator from "email-validator";
 import { GetChatsList } from "../lib/referencesUtils";
 import { User } from "firebase/auth";
+import {z} from "zod";
 
 interface Props {
   user: User | null | undefined;
@@ -61,7 +61,8 @@ export const UserBar = ({ user }: Props): JSX.Element => {
       return;
     }
     if (
-      EmailValidator.validate(input) &&
+      // check if input is valid email, input not user and input already exist
+      z.string().email().safeParse(input).success &&
       input !== user?.email &&
       !chatAlreadyExist(input)
     ) {
