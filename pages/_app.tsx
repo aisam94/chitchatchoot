@@ -13,6 +13,7 @@ import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { DocumentData, DocumentReference } from "@firebase/firestore";
 import { User } from "firebase/auth";
+import Head from "next/head";
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   const [user, setUser] = useState<User | null>(null);
@@ -24,11 +25,11 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
-    })
+    });
 
     return () => {
       unsubscribe();
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -56,6 +57,29 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
 
   return (
     <>
+      <Head>
+        <title>ChitChatChoot</title>
+        <meta name="description" content="Chitty chitty bang bang" />
+        <link rel="icon" href="" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/favicon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
+      </Head>
       <Navbar user={user} />
       <div className="screen-height">
         {user ? (
