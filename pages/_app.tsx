@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 
@@ -9,15 +9,27 @@ import About from "./about";
 import Settings from "./settings";
 import Navbar from "../components/Navbar";
 import { NextRouter, useRouter } from "next/router";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { DocumentData, DocumentReference } from "@firebase/firestore";
+import { User } from "firebase/auth";
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
-  //get user status from firebase modules
-  const [user, loading] = useAuthState(auth);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const router: NextRouter = useRouter();
+
+  useEffect(() => {
+    // maybe can just stright use auth.currentUser ??
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setLoading(false);
+    })
+
+    return () => {
+      unsubscribe();
+    }
+  }, []);
 
   useEffect(() => {
     if (user) {

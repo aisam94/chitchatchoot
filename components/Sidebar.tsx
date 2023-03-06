@@ -1,13 +1,18 @@
 import ChatList from "./ChatList";
 import { UserBar } from "./UserBar";
 import { GetChatsList } from "../lib/referencesUtils";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
+import { useEffect, useState } from "react";
+import { User } from "firebase/auth";
 
 const Sidebar = () => {
   //create snapshot of doc of chat that has user email
-  const [user] = useAuthState(auth);
+  const [user, setUser] = useState<User | null>(null);
   const chatSnapshot = GetChatsList(user);
+
+  useEffect(() => {
+    setUser(auth.currentUser);
+  }, []);
 
   return (
     <div className="w-full overflow-y-auto break-words bg-gray-100 sm:block">
