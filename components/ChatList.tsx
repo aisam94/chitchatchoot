@@ -21,9 +21,17 @@ const ChatList = ({ id, users, user }: Props) => {
     router.push(`/chat/${id}`);
   };
 
+  const isCurrentRecipient = () => {
+    const routerId: string = router.query.id as string;
+    if (id === routerId) return true;
+    return false;
+  };
+
   return (
     <div
-      className="flex items-center p-1 my-2 break-words cursor-pointer hover:bg-blue-200"
+      className={`flex items-center p-1 my-2 break-words cursor-pointer hover:bg-blue-200 ${
+        isCurrentRecipient() && `bg-blue-400`
+      }`}
       onClick={(event) => enterChat(event)}
     >
       {/*Recipient circle logo*/}
